@@ -2,7 +2,7 @@ const express        = require('express');
 // const MongoClient    = require('mongodb').MongoClient;
 const bodyParser     = require('body-parser');
 const app            = express();
-
+const validator =require('express-validator');
 
 const user= require('./routes/users/user');
 const idea= require('./routes/ideas/idea');
@@ -21,6 +21,7 @@ app.use((req,res,next)=>{
   next();
 
 });
+app.use(validator());
 
 app.use(user);
 app.use(idea);
