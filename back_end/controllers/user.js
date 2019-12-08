@@ -1,7 +1,7 @@
-const express = require('express');
-const router=express.Router();
 
-router.get("/authentification",(req,res,next)=>{
+
+
+exports.getuser=(req,res,next)=>{
     res.status(201).json({
         message:'get authentification',
         get:[{
@@ -13,8 +13,9 @@ router.get("/authentification",(req,res,next)=>{
             }],
         done:'true' 
                 });
-                    });
-router.post("/authentification",(req,res,next)=>{
+};
+
+exports.postuser=(req,res,next)=>{
     const full_name=req.body.full_name;
     const password_hashed=req.body.password;
     const email_user=req.body.email_user;
@@ -31,8 +32,4 @@ router.post("/authentification",(req,res,next)=>{
     })
 //******************* */
 
-})
-
-                    
-
-module.exports=router;
+};

@@ -4,7 +4,7 @@ const bodyParser     = require('body-parser');
 const app            = express();
 
 
-const authentification= require('./routes/users/authentification');
+const user= require('./routes/users/user');
 
 app.use(bodyParser.json());
 app.use(
@@ -20,6 +20,6 @@ app.use((req,res,next)=>{
 
 });
 
-app.use(authentification);
+app.use(user);
 
 app.listen(8060);
