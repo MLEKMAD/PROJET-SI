@@ -5,6 +5,8 @@ const app            = express();
 
 
 const user= require('./routes/users/user');
+const idea= require('./routes/ideas/idea');
+
 
 app.use(bodyParser.json());
 app.use(
@@ -21,5 +23,7 @@ app.use((req,res,next)=>{
 });
 
 app.use(user);
+app.use(idea);
+
 
 app.listen(8060);

@@ -1,14 +1,14 @@
 const express = require('express');
 const router=express.Router();
-const user=require('../../controllers/idea');
+const idea=require('../../controllers/idea');
 
-router.get('/idea',getidea);
+router.get('/idea',idea.getidea);
 
-router.post('/idea',postidea);
+router.post('/idea',idea.postidea);
 
-router.put('/idea',updateidea);
+router.put('/idea',idea.updateidea);
 
-router.delete('/idea',deleteidea);
+router.delete('/idea',idea.deleteidea);
 
 
 
