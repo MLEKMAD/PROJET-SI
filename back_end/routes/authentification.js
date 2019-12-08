@@ -4,3 +4,6 @@ const router=express.Router();
 router.get("/authentification",(req,res,next)=>{
     res.send('hello');
 })
+
+
+module.exports=router;

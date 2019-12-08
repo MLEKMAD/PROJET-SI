@@ -4,13 +4,16 @@ const bodyParser     = require('body-parser');
 const app            = express();
 
 
-// const authentification= require('./routes/authentification')
+const authentification= require('./routes/authentification');
 
+app.use(bodyParser.json());
+app.use((req,res,next)=>{
+  res.setHeader('Access-Control-Allow-Origin','*');
+  res.setHeader('Access-Control-Allow-Methods','OPTIONS,GET,POST,PUT,PATCH,DELETE');
+  res.setHeader('Access-Control-Allow-Headers','Content-Type,Authorization');
 
-
-app.use("/authentification",(req,res)=>{
-    res.send("hello")
 });
-app.listen(8000, () => {
-  console.log('We are live on ' );
-});
+
+app.use(authentification);
+
+app.listen(8000);
