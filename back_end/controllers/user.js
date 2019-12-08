@@ -2,15 +2,8 @@
 
 
 exports.getuser=(req,res,next)=>{
-    res.status(201).json({
-        message:'get authentification',
-        get:[{
-            id_user:1,
-            full_name:'hatim lahlali',
-            password_hashed:'******',
-            email_user:'hatimlahlali.13@outlook.fr',
-            phone_number_user:'0664065964'
-            }],
+    res.json({
+        message:'get user',
         done:'true' 
                 });
 };
@@ -20,10 +13,9 @@ exports.postuser=(req,res,next)=>{
     const password_hashed=req.body.password;
     const email_user=req.body.email_user;
     const phone_number_user=req.body.phone_number_user;
-//compare with oracle bdd
-    console.log(req.body);
+//compare with oracle bdd if existe 
     res.status(201).json({
-        message:'POST authentification',
+        message:'POST user',
         full_name,
         password_hashed,
         email_user,
@@ -31,5 +23,15 @@ exports.postuser=(req,res,next)=>{
         done:'done succesfully'
     })
 //******************* */
+};
 
+exports.updateuser=(req,res,next)=>{
+    const email_user=req.body.email_user;
+//compare with oracle bdd
+    console.log(req.body);
+    res.status(201).json({
+        message:'update user',
+        done:'done succesfully'
+    })
+//******************* */
 };

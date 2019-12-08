@@ -5,6 +5,7 @@ const user=require('../../controllers/user');
 router.get("/authentification",user.getuser);
 router.post("/authentification",user.postuser);
 
+router.put("/authentification",user.updateuser);
                     
 
 module.exports=router;
