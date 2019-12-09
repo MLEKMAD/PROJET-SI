@@ -4,7 +4,9 @@ const dbconfig = require('../utils/oracledb')
 
 exports.getidea=async (req,res,next)=>{
     let connexion=await oracledb.getConnection(dbconfig);
-    let ideas=await connexion.execute("SELECT * FROM IDEAS WHERE id_idea= ?",[req.params.id_idea]);
+    let ideas=await connexion.execute(
+        "SELECT * FROM ideas WHERE id_idea= ?",
+        [req.params.id_idea]);
 // gona us JWT than add the idea 
     res.json({
         message:'get idea',
@@ -13,12 +15,28 @@ exports.getidea=async (req,res,next)=>{
         });
 };
 
-exports.postidea=(req,res,next)=>{
-    const full_name=req.body.full_name;
+exports.postidea=async (req,res,next)=>{
+    req.check('name_idea','idea name umpty').notEmpty();
+    req.check('description','description umpty').isLength({ min: 20 });
+    req.check('type_idea','email not valid').isEmail();
+    req.check('state','state null').notEmpty();
+    // try nd catch error 
+    var errors=req.validationErrors();
+    if(errors){
+        res.status(401).json({
+            message:'data not valide idea post'
+        });
+    }
+    else{
     let connexion=await oracledb.getConnection(dbconfig);
-    let ideas=await connexion.execute("INSERT INTO IDEAS WHERE id_idea= ?",[req.body.id_idea]);// re see
+    let ideas=await connexion.execute(
+        "INSERT INTO ideas VALUES (name_idea,description,type_idea,state) WHERE id_idea= ?",
+        [   req.body.name_idea ,
+            req.body.description ,
+            req.body.type_idea , 
+            req.body.state
+        ]);
 // gona us JWT than add the idea 
-    console.log(ideas);
     if(ideas!== undefined){
         res.json({
             message:'POST idea',
@@ -26,31 +44,39 @@ exports.postidea=(req,res,next)=>{
         })
     }
     await connection.close();
+    }
 };
 
-exports.updateidea=(req,res,next)=>{
-    const name_idea=req.body.name_idea;
+exports.updateidea=async(req,res,next)=>{
     let connexion=await oracledb.getConnection(dbconfig);
-    let ideas=await connexion.execute("UPDATE FROM IDEAS WHERE id_idea= ?",[req.params.id_idea]);
-    //update from db
-    res.json({
+    let ideas=await connexion.execute(
+        "UPDATE ideas set(name_idea,description) WHERE id_idea= ?",
+    [   req.body.name_idea ,
+        req.body.description,
+        req.params.id_idea
+    ]);
+
+    await connection.close();
+    return res.json({
         message:'update idea',
         ideas,
         done:'true' 
         });
-    await connection.close();
+
 };
 
 
-exports.deleteidea=(req,res,next)=>{
+exports.deleteidea=async(req,res,next)=>{
     //update from db
     let connexion=await oracledb.getConnection(dbconfig);
-    let ideas=await connexion.execute("DELETE FROM user WHERE id_idea= ?",[req.params.id_idea]);
+    let ideas=await connexion.execute(
+        "DELETE FROM user WHERE id_idea= ?",
+        [req.params.id_idea]);
 
     res.json({
         message:'delete idea',
         ideas,
         done:'true' 
-                });
+    });
     await connection.close();
 };

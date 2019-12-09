@@ -4,7 +4,7 @@ const validatePhoneNumber = require('validate-phone-number-node-js');
 
 exports.getuser=async(req,res,next)=>{
     let connexion=await oracledb.getConnection(dbconfig);
-    let users=await connexion.execute("SELECT * FROM users WHERE id_user= ?",[req.params.user_id]);
+    let users=await connexion.execute("SELECT * FROM user WHERE id_user= ?",[req.params.user_id]);
     res.json({
         message:'get user',
         users,
@@ -33,21 +33,14 @@ exports.postuser=async(req,res,next)=>{
         });
     }
     else{
-        let users={
-            id_user,
-            full_name=req.body.full_name,
-            password_hashed=req.body.password_hashed,
-            email_user=req.body.email_user,
-            phone_number_user=req.body.phone_number_user
-        }
         let connexion=await oracledb.getConnection(dbconfig);
         let userexiste =await connexion.execute("SELECT email_user FROM user WHERE email_user=?",[req.body.email_user]);
         if(userexiste == undefined){
-            let user=await connexion.execute("INSERT INTO users",[ users.full_name , users.password_hashed , users.email_user , users.phone_number_user ]);
+            let user=await connexion.execute("INSERT INTO users values(full_name , password_hashed ,email_user, phone_number_user)",[ users.full_name , users.password_hashed , users.email_user , users.phone_number_user ]);
             users.id_user=user.id_user;
             res.status(201).json({
                 message:'POST user . user created succesfully ',
-                users,
+                user,
             })
         }
     }
@@ -56,9 +49,8 @@ exports.postuser=async(req,res,next)=>{
 
 
 exports.updateuser=async(req,res,next)=>{
-    const email_user=req.body.email_user;
     let connexion=await oracledb.getConnection(dbconfig);
-    let users=await connexion.execute("UPDATE FROM user WHERE id_idea= ?",[req.params.id_idea]);
+    let users=await connexion.execute("UPDATE user set(password_hashed=?) WHERE id_user= ?",[req.body.password_hashed,req.params.id_user]);
 //compare with oracle bdd
     console.log(req.body);
     res.status(201).json({
