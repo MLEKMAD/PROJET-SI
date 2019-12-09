@@ -5,8 +5,7 @@ const validator =require('express-validator');
 
 const user= require('./routes/users/user');
 const idea= require('./routes/ideas/idea');
-
-
+require('events').EventEmitter.defaultMaxListeners = 15;
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
