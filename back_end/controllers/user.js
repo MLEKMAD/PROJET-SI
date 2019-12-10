@@ -12,6 +12,8 @@ exports.getuser=async(req,res,next)=>{
     });
 };
 
+
+
 exports.postuser=async(req,res,next)=>{
     req.check('full_name','full name umpty').notEmpty();
     req.check('password_hashed','password umpty').isLength({ min: 6 });

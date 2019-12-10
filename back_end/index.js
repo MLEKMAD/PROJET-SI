@@ -2,10 +2,16 @@ const express        =require('express');
 const bodyParser     = require('body-parser');
 const app            = express();
 const validator =require('express-validator');
+const dotenv = require('dotenv');
 
 const user= require('./routes/users/user');
+const auth= require('./routes/users/auth');
+
 const idea= require('./routes/ideas/idea');
+
 require('events').EventEmitter.defaultMaxListeners = 15;
+dotenv.config();
+
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -25,6 +31,7 @@ app.use(validator());
 
 
 app.use(user);
+app.use(auth);
 app.use(idea);
 
 

@@ -1,14 +1,16 @@
 const express = require('express');
 const router=express.Router();
 const idea=require('../../controllers/idea');
+const verifytoken=require('../../middleware/verifytoken');
 
-router.get('/idea',idea.getidea);
 
-router.post('/idea',idea.postidea);
+router.get('/idea', verifytoken , idea.getidea);
 
-router.put('/idea',idea.updateidea);
+router.post('/idea', verifytoken , idea.postidea);
 
-router.delete('/idea',idea.deleteidea);
+router.put('/idea', verifytoken , idea.updateidea);
+
+router.delete('/idea', verifytoken , idea.deleteidea);
 
 
 
