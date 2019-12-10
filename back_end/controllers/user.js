@@ -1,6 +1,6 @@
-
+const bcrypt=require('bcryptjs')
 const validatePhoneNumber = require('validate-phone-number-node-js');
-
+const lencrypt=bcrypt.genSalt(10);
 
 exports.getuser=async(req,res,next)=>{
     let connexion=await oracledb.getConnection(dbconfig);
@@ -18,16 +18,6 @@ exports.postuser=async(req,res,next)=>{
     req.check('email_user','email not valid').isEmail();
     req.check('phone_number_user','number not valide').isLength({min:10})
     const phone_number_valide = validatePhoneNumber.validate(req.body.phone_number_user);
-    const EmailExiste= await connexion.execute(
-        "SELECT email_user FROM user where email_user =? ",
-        [mail_user]);
-    if(EmailExiste){
-        return req.status(400).json({
-            message :'error postuser /  email already existe'
-        })
-    }
-    
-    
     if(!phone_number_valide){
         return res.status(400).json({
             message:'error postuser / phone number not valide '
@@ -41,17 +31,22 @@ exports.postuser=async(req,res,next)=>{
         });
     }
     else{
+        const HashedPassword = await bcrypt.hash(req.body.password_hashed,lencrypt);
         let connexion=await oracledb.getConnection(dbconfig);
         let userexiste =await connexion.execute(
             "SELECT email_user FROM user WHERE email_user=?",
             [req.body.email_user]);
         if(userexiste){
+            return res.status(400).json({
+                message :'user postuser /user already existe'
+            });
+        }else{
             let user=await connexion.execute(
                 "INSERT INTO users values(full_name , password_hashed ,email_user, phone_number_user)",
-                [   users.full_name ,
-                    users.password_hashed ,
-                    users.email_user ,
-                    users.phone_number_user ]);
+                [   req.body.full_name ,
+                    HashedPassword,
+                    req.body.email_user ,
+                    req.body.phone_number_user ]);
 
             await connection.close();
             return res.status(201).json({
@@ -59,6 +54,7 @@ exports.postuser=async(req,res,next)=>{
                 user
             })
         }
+
     }
 };
 
