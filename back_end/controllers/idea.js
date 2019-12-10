@@ -7,11 +7,11 @@ exports.getidea=async (req,res,next)=>{
     let ideas=await connexion.execute(
         "SELECT * FROM ideas WHERE id_idea= ?",
         [req.params.id_idea]);
+    await connexion.close();
 // gona us JWT than add the idea 
     res.json({
         message:'get idea',
-        ideas,
-        done:'true' 
+        ideas
         });
 };
 
@@ -24,7 +24,7 @@ exports.postidea=async (req,res,next)=>{
     var errors=req.validationErrors();
     if(errors){
         res.status(401).json({
-            message:'data not valide idea post'
+            message:'error getidea /data not valide idea post'
         });
     }
     else{
@@ -36,14 +36,14 @@ exports.postidea=async (req,res,next)=>{
             req.body.type_idea , 
             req.body.state
         ]);
-// gona us JWT than add the idea 
+    await connexion.close();
+        // gona us JWT than add the idea 
     if(ideas!== undefined){
         res.json({
             message:'POST idea',
             done:'done succesfully'
         })
     }
-    await connection.close();
     }
 };
 
@@ -59,8 +59,7 @@ exports.updateidea=async(req,res,next)=>{
     await connection.close();
     return res.json({
         message:'update idea',
-        ideas,
-        done:'true' 
+        ideas
         });
 
 };
@@ -72,11 +71,10 @@ exports.deleteidea=async(req,res,next)=>{
     let ideas=await connexion.execute(
         "DELETE FROM user WHERE id_idea= ?",
         [req.params.id_idea]);
+    await connection.close();
 
     res.json({
         message:'delete idea',
-        ideas,
-        done:'true' 
+        ideas 
     });
-    await connection.close();
 };
