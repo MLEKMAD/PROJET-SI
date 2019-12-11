@@ -1,6 +1,6 @@
 const oracledb=  require('oracledb'); // not sure
-const dbconfig = require('../utils/oracledb')
-
+const dbconfig = require('../utils/oracledb');
+// const transport=require('../utils/nodemailer');
 
 exports.getidea=async (req,res,next)=>{
     let connexion=await oracledb.getConnection(dbconfig);
