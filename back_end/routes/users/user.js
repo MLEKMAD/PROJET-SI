@@ -6,7 +6,7 @@ const verifytoken=require('../../middleware/verifytoken');
 router.get("/authentification",user.getuser);
 router.post("/authentification",user.postuser);
 
-router.put("/authentification" , verifytoken , user.updateuser);
+router.put("/authentification" , verifytoken ,user.updateuser);
                     
 
 module.exports=router;

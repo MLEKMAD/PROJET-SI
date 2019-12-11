@@ -1,6 +1,9 @@
 
 const bcrypt=require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const oracledb=  require('oracledb'); // not sure
+const dbconfig = require('../utils/oracledb');
+
 
 exports.login=async (req,res,next)=>{
     let connexion = oracledb.getconnexion(dbconfig);
@@ -33,7 +36,8 @@ exports.login=async (req,res,next)=>{
                     });
             }
             else{
-                const token=jwt.sign({id:user_id},process.env.TOKEN_SECRET);
+                //i have to console log the user to see the composante of it
+                const token=jwt.sign({id_user:user[0][0]['id_user']},process.env.TOKEN_SECRET);
                 return res.header('auth_token',token).json({
                     message:'logged succesfully '
                 })   

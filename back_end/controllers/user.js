@@ -1,12 +1,18 @@
 const bcrypt=require('bcryptjs')
 const validatePhoneNumber = require('validate-phone-number-node-js');
 const lencrypt=bcrypt.genSalt(10);
+const oracledb=  require('oracledb'); // not sure
+const dbconfig = require('../utils/oracledb');
+const jwt=require('jsonwebtoken');
 
 exports.getuser=async(req,res,next)=>{
+    const token =req.header('auth_token');
+    const verify = jwt.verify(token,process.env.TOKEN-SECRET)
     let connexion=await oracledb.getConnection(dbconfig);
-    let users=await connexion.execute("SELECT * FROM user WHERE id_user= ?",[req.params.user_id]);
+    let users=await connexion.execute("SELECT * FROM user WHERE id_user= ?",[verify]);
     await connexion.close();
-    res.json({
+
+    return res.json({
         message:'get user',
         users
     });
@@ -33,7 +39,6 @@ exports.postuser=async(req,res,next)=>{
         });
     }
     else{
-        const HashedPassword = await bcrypt.hash(req.body.password_hashed,lencrypt);
         let connexion=await oracledb.getConnection(dbconfig);
         let userexiste =await connexion.execute(
             "SELECT email_user FROM user WHERE email_user=?",
@@ -43,6 +48,7 @@ exports.postuser=async(req,res,next)=>{
                 message :'user postuser /user already existe'
             });
         }else{
+            const HashedPassword = await bcrypt.hash(req.body.password_hashed,lencrypt);
             let user=await connexion.execute(
                 "INSERT INTO users values(full_name , password_hashed ,email_user, phone_number_user)",
                 [   req.body.full_name ,
@@ -63,15 +69,15 @@ exports.postuser=async(req,res,next)=>{
 
 exports.updateuser=async(req,res,next)=>{
     let connexion=await oracledb.getConnection(dbconfig);
+    const HashedPassword = await bcrypt.hash(req.body.password_hashed,lencrypt);
     let users=await connexion.execute(
         "UPDATE user set(password_hashed=?) WHERE id_user= ?",
-        [   req.body.password_hashed,
+        [   password_hashed,
             req.params.id_user]);
 //compare with oracle bdd
     await connection.close();
     return res.status(201).json({
-        message:'update user',
-        users
+        message:'update user successfully'
     })
 
 //******************* */
