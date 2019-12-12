@@ -23,4 +23,6 @@ export class CNavbar extends Component{
 </div>
         )}
 }
+
+
 export default CNavbar;
