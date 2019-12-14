@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <Router history={history}>
-        <Routes />
+        <Routes/>
       </Router>
     </div>
   );

@@ -7,25 +7,20 @@ import {
   Button,
   Container,
 } from 'react-bootstrap';
-
+import { Link } from 'react-router-dom';
 export class Requests extends Component {
   render() {
     return (
       <Container>
-        <Navbar fluid collapseOnSelect>
-          <Navbar.Header>
+        <Navbar bg='dark' variant="dark">
             <Navbar.Brand>
-              <NavItem href="/">Home</NavItem>
+              <NavItem> <Link to="/">Home</Link></NavItem>
             </Navbar.Brand>
-            <Navbar.Toggle />
-          </Navbar.Header>
-          <Navbar.Collapse>
-            <Nav pullRight>
-              <NavItem href="/ideas">ideas</NavItem>
-              <NavItem href='/companies'>Companies</NavItem>
-              <NavItem href="/companies">Login</NavItem>
+            <Nav  pullRight className='mr-auto'>
+              <Nav.Link> <Link to="/ideas">ideas</Link></Nav.Link>
+              <Nav.Link> <Link to='/companies'>Companies</Link></Nav.Link>
+              <Nav.Link> <Link to="/companies">Login</Link></Nav.Link>
             </Nav>
-          </Navbar.Collapse>
         </Navbar>
       </Container>
     );
