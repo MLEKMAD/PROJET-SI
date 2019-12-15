@@ -16,7 +16,7 @@ export class CNavbar extends Component {
           <Nav pullRight className="mr-auto">
             <Nav.Link href="/orders">My Orders</Nav.Link>
             <Nav.Link href="/addIdea">add an Idea</Nav.Link>
-            <Nav.Link href="/compagny">Create a compagny</Nav.Link>
+            <Nav.Link href="/AddCompany">Create a Company</Nav.Link>
             <Nav.Link href="/logout">Logout</Nav.Link>
           </Nav>
         </Navbar>
