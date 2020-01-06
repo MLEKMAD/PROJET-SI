@@ -3,23 +3,23 @@ const dbconfig = require('../utils/oracledb');
 // const transport=require('../utils/nodemailer');
 const jwt=require('jsonwebtoken');
 
-exports.getidea=async (req,res,next)=>{
+exports.getdemande=async (req,res,next)=>{
     const token =req.header('auth_token');
     const verify = jwt.verify(token,process.env.TOKEN-SECRET)
     let connexion=await oracledb.getConnection(dbconfig);
-    let ideas=await connexion.execute(
-        "SELECT * FROM ideas WHERE id_user= ?",
+    let demandes=await connexion.execute(
+        "SELECT (name_demande,description,type_idea,state) FROM demandes WHERE id_research_team= ?",
         [verify]);
     await connexion.close();
 // gona us JWT than add the idea 
     return res.json({
         message:'get all idea',
-        ideas
+        demandes=demandes.rows
         });
 };
 
-exports.postidea=async (req,res,next)=>{
-    req.check('name_idea','idea name umpty').notEmpty();
+exports.postdemande=async (req,res,next)=>{
+    req.check('name_demande','idea name umpty').notEmpty();
     req.check('description','description umpty').isLength({ min: 20 });
     req.check('type_idea','email not valid').isEmail();
     req.check('state','state null').notEmpty();
@@ -35,20 +35,19 @@ exports.postidea=async (req,res,next)=>{
         const verify = jwt.verify(token,process.env.TOKEN-SECRET)
         let connexion=await oracledb.getConnection(dbconfig);
         //see the outpout of verify 
-        let id_idea=await connexion.execute(
-            "SELECT id_idea FROM idea WHERE id_user=?",
-            [verify]);
-        let ideas=await connexion.execute(
-            "INSERT INTO ideas VALUES (name_idea,description,type_idea,state) WHERE id_idea",
-            [   req.body.name_idea ,
+        // let id_idea=await connexion.execute(
+        //     "SELECT id_demande FROM demandes WHERE id_user=?",
+        //     [verify]);
+        let demandes=await connexion.execute(
+            "INSERT INTO demandes VALUES (name_demande,description,type_idea,state,id_research_team=?)",
+            [   req.body.name_demande ,
                 req.body.description ,
                 req.body.type_idea , 
                 req.body.state,
-                req.params.id_idea
+                verify
             ]);
         await connexion.close();
-            // gona us JWT than add the idea 
-        if(ideas!== undefined){
+        if(demandes!== undefined){
             return res.json({
                 message:'POST idea',
                 done:'done succesfully'
@@ -57,35 +56,39 @@ exports.postidea=async (req,res,next)=>{
     }
 };
 
-exports.updateidea=async(req,res,next)=>{
-
+exports.updatedemande=async(req,res,next)=>{
+    const token =req.header('auth_token');
+    const verify = jwt.verify(token,process.env.TOKEN-SECRET);
     let connexion=await oracledb.getConnection(dbconfig);
-    let ideas=await connexion.execute(
-        "UPDATE ideas set(name_idea,description) WHERE id_idea= ?",
-    [   req.body.name_idea ,
+    let demandes=await connexion.execute(
+        "UPDATE demandes set(name_demande,description,state=0) WHERE id_idea= ?,id_user=?",
+    [   req.body.name_demande ,
         req.body.description,
-        req.body.id_idea
+        req.params.id_demande,
+        verify
     ]);
-
     await connection.close();
     return res.json({
         message:'update idea',
-        ideas
+        demandes=demandes.rows
         });
 
 };
 
 
-exports.deleteidea=async(req,res,next)=>{
+exports.deletedemande=async(req,res,next)=>{
     //update from db
+    const token =req.header('auth_token');
+    const verify = jwt.verify(token,process.env.TOKEN-SECRET);
     let connexion=await oracledb.getConnection(dbconfig);
-    let ideas=await connexion.execute(
-        "DELETE FROM user WHERE id_idea= ?",
-        [req.params.id_idea]);
+    let demandes=await connexion.execute(
+        "DELETE FROM demandes WHERE id_demandes= ?,id_user=?",
+        [req.params.id_demande,
+        verify
+        ]);
     await connection.close();
 
     return res.json({
-        message:'delete idea',
-        ideas 
+        message:'delete idea', 
     });
 };
