@@ -1,25 +1,24 @@
-import React,{Component} from 'react';
-import {Nav,Navbar,Form,FormControl,Button } from 'react-bootstrap';
-
-export class CIRNavbar extends Component{
-    
-    render(){
-        return(
-            <div>
-  <Navbar bg="dark" variant="dark">
-    <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-    <Nav className="mr-auto">
-      <Nav.Link href="#home">Home</Nav.Link>
-      <Nav.Link href="#features">Features</Nav.Link>
-      <Nav.Link href="#pricing">Pricing</Nav.Link>
-    </Nav>
-    <Form inline>
-      <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-      <Button variant="outline-info">Search</Button>
-    </Form>
-  </Navbar>
- 
-</div>
-        )}
+import React, { Component } from 'react';
+import { NavItem, Nav, Navbar, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+export class CIRNavbar extends Component {
+  render() {
+    return (
+      <Container>
+        
+        <Navbar bg='dark' variant="dark">
+            <Navbar.Brand>
+              <Nav.Link><Link to="/">Home</Link></Nav.Link>
+            </Navbar.Brand>
+            <Nav className="mr-auto">
+              <Nav.Link ><Link to='/requests'>Requests</Link></Nav.Link>
+              <Nav.Link> <Link to="/states">States</Link></Nav.Link>
+              <Nav.Link> <Link to="/">Logout</Link></Nav.Link>
+            </Nav>
+          
+        </Navbar>
+      </Container>
+    );
+  }
 }
 export default CIRNavbar;
