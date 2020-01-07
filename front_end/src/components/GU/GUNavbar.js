@@ -1,26 +1,28 @@
 import React,{Component} from 'react';
-import {Nav,Navbar,Form,FormControl,Button } from 'react-bootstrap';
+import {Nav,Navbar,Form,FormControl,Button,Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
 
 export class GUNavbar extends Component{
     
     render(){
         return(
-            <div>
-  <Navbar bg="dark" variant="dark">
-    <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-    <Nav className="mr-auto">
-      <Nav.Link href="#home">Home</Nav.Link>
-      <Nav.Link href="#orders">Responses</Nav.Link>
-      <Nav.Link href="#idea">Ideas</Nav.Link>
-      <Nav.Link href="#compagny">Compagnies</Nav.Link>
-    </Nav>
-    <Form inline>
-      <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-      <Button variant="outline-info">Search</Button>
-    </Form>
-  </Navbar>
- 
-</div>
+          <Container>
+        
+          <Navbar bg='dark' variant="dark">
+              <Navbar.Brand>
+                <Nav.Link><Link to="/">Home</Link></Nav.Link>
+              </Navbar.Brand>
+              <Nav className="mr-auto">
+                <Nav.Link> <Link to="/pending">Pending </Link></Nav.Link>
+                <Nav.Link> <Link to="/statistics">Statistics</Link></Nav.Link>
+
+                <Nav.Link> <Link to="/">Logout</Link></Nav.Link>
+              </Nav>
+            
+          </Navbar>
+        </Container>
+
         )}
 }
 export default GUNavbar;
