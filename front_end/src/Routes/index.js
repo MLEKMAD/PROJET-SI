@@ -49,7 +49,7 @@ export default class Routes extends React.Component {
         </Route>
         <Route exact path="/addCompany">
           <CNavbar />
-          <AddCompany/>
+          
         </Route>
         <Route exact path="/pending">
           <GUNavbar />
