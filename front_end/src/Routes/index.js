@@ -8,7 +8,6 @@ import Requests from '../components/CIR/Requests';
 import SignInUp from '../components/SignInUp/SignInUp';
 import Companies from '../components/CIR/Companies';
 import Ideas from '../components/CIR/Ideas';
-import CNavbar from '../components/Client/CNavbar';
 import AddIdea from '../components/Client/AddIdea';
 import AddCompany from '../components/Client/AddCompany';
 import GUHome from '../components/GU/GUHome'
@@ -21,22 +20,22 @@ export default class Routes extends React.Component {
     return (
       <Switch>
         <Route exact path="/states">
-          <CNavbar/>
+          
           <States />
         </Route>
         <Route exact path="/requests">
           <Requests />
         </Route>
         <Route exact path="/CIR">
-          <CNavbar/>
+          
           <CIRHome />
         </Route>
         <Route exact path="/GU">
-          <CNavbar />
+          
           <GUHome />
         </Route>
         <Route exact path="/sign">
-          <CNavbar/>
+          
           <SignInUp />
         </Route>
         <Route exact path="/companies">
@@ -54,15 +53,15 @@ export default class Routes extends React.Component {
           
         </Route>
         <Route exact path="/pending">
-          <CNavbar />
+          
           <Pending/>
         </Route>
         <Route exact path="/statistics">
-          <CNavbar />
+          
           <Statistics/>
         </Route>
         <Route path="/">
-          <CNavbar/>
+          
           <SignInUp />
         </Route>
       </Switch>
