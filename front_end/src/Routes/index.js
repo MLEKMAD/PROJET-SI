@@ -16,6 +16,8 @@ import GUHome from '../components/GU/GUHome'
 import GUNavbar from '../components/GU/GUNavbar'
 import Pending from '../components/GU/Pending';
 import Statistics from '../components/GU/Statistics';
+import toolbar from '../components/Toolbar/Toolbar'
+import { Toolbar } from '@material-ui/core';
 export default class Routes extends React.Component {
   render() {
     return (
@@ -44,11 +46,11 @@ export default class Routes extends React.Component {
           <Ideas />
         </Route>
         <Route exact path="/addIdea">
-          <CNavbar />
+          <Toolbar />
           <AddIdea />
         </Route>
         <Route exact path="/addCompany">
-          <CNavbar />
+          <Toolbar />
           
         </Route>
         <Route exact path="/pending">
