@@ -6,7 +6,7 @@ export class CIRHome extends Component{
         return(
             <div>
                 <Jumbotron>
-                    <h1>Request name</h1>
+                    <h1>Request </h1>
                     <p>description</p>
                     <p>
                         <button variant='primary'>
