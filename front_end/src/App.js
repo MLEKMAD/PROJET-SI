@@ -40,8 +40,10 @@ class App extends Component {
       <Toolbar drawerClickHandler = {this.drawerToggleClickHandler}/>
       <SideDrawer show={this.state.sideDrawerOpen}/>
       {backDrop}
-      <main style={{marginTop: '90px', padding :'5px' }}></main>
-      <p> Hi there bud</p>
+      <main style={{marginTop: '90px', padding :'5px' }}/>
+      <Router history={history}>
+        <Routes/>
+      </Router>
     </div>
   );
 }

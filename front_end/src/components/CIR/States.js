@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Typography, Grid } from '@material-ui/core/';
-import useStyles from '../Navbar/style';
 import {
   Nav,
   Navbar,
@@ -13,6 +12,7 @@ import {
 
 export class States extends Component {
   state = {
+    lkhdra:"btata",
     states: [],
   };
   render() {
@@ -27,7 +27,7 @@ export class States extends Component {
           justify="space-around"
           alignItems="flex-start"
         >
-          heeey
+          heeey `{this.state.lkhdra}`
         </Grid>
       </div>
     );
