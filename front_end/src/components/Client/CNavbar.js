@@ -18,10 +18,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import {Nav,Navbar,Form,FormControl,Button,Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { MemoryRouter as Router } from 'react-router';
+import { Link, LinkProps } from 'react-router-dom';
 
 
 const drawerWidth = 240;
+  const preventDefault = event => event.preventDefault();
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -83,7 +85,7 @@ export default function PersistentDrawerLeft() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  const preventDefault = event => event.preventDefault();
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -140,13 +142,24 @@ export default function PersistentDrawerLeft() {
           ))}
         </List>
         <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}  >
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+ <List >
+  <Typography className={classes.root}>
+  <ListItem button >
+  <ListItemIcon><MailIcon /></ListItemIcon>
+  <Link href="/requests" onClick={preventDefault}>
+  <ListItemText primary='Requests' />
+</Link>
+  </ListItem>
+  
+  <ListItem button>
+  <ListItemIcon><MailIcon /></ListItemIcon>
+  <Link href="/states" onClick={preventDefault} color="inherit">
+    States
+  </Link>
+  </ListItem>
+
+</Typography>
+
         </List>
       </Drawer>
       <main
