@@ -6,35 +6,37 @@ import CIRHome from '../components/CIR/CIRHome';
 import States from '../components/CIR/States';
 import Requests from '../components/CIR/Requests';
 import SignInUp from '../components/SignInUp/SignInUp';
-import CIRNavbar from '../components/CIR/CIRNavbar';
 import Companies from '../components/CIR/Companies';
 import Ideas from '../components/CIR/Ideas';
 import CNavbar from '../components/Client/CNavbar';
 import AddIdea from '../components/Client/AddIdea';
 import AddCompany from '../components/Client/AddCompany';
 import GUHome from '../components/GU/GUHome'
-import GUNavbar from '../components/GU/GUNavbar'
 import Pending from '../components/GU/Pending';
 import Statistics from '../components/GU/Statistics';
+import toolbar from '../components/Toolbar/Toolbar'
+import { Toolbar } from '@material-ui/core';
 export default class Routes extends React.Component {
   render() {
     return (
       <Switch>
         <Route exact path="/states">
+          <CNavbar/>
           <States />
         </Route>
         <Route exact path="/requests">
           <Requests />
         </Route>
         <Route exact path="/CIR">
-          <CIRNavbar />
+          <CNavbar/>
           <CIRHome />
         </Route>
         <Route exact path="/GU">
-          <GUNavbar />
+          <CNavbar />
           <GUHome />
         </Route>
         <Route exact path="/sign">
+          <CNavbar/>
           <SignInUp />
         </Route>
         <Route exact path="/companies">
@@ -44,22 +46,23 @@ export default class Routes extends React.Component {
           <Ideas />
         </Route>
         <Route exact path="/addIdea">
-          <CNavbar />
+          <Toolbar />
           <AddIdea />
         </Route>
         <Route exact path="/addCompany">
-          <CNavbar />
+          <Toolbar />
           
         </Route>
         <Route exact path="/pending">
-          <GUNavbar />
+          <CNavbar />
           <Pending/>
         </Route>
         <Route exact path="/statistics">
-          <GUNavbar />
+          <CNavbar />
           <Statistics/>
         </Route>
         <Route path="/">
+          <CNavbar/>
           <SignInUp />
         </Route>
       </Switch>

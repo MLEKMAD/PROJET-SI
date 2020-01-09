@@ -32,6 +32,14 @@ export class SignIn extends Component {
                 name="password"
               />
             </InputGroup>
+            <Form.Group controlId="exampleForm.ControlSelect1">
+            <Form.Label>Type</Form.Label>
+            <Form.Control
+              as="select"
+              type="text"
+              aria-describedby="inputGroupPrepend"
+            ></Form.Control>
+          </Form.Group>
           </Form.Group>
           <Button type="submit">Login</Button>
         </Form>
