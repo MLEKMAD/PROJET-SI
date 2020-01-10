@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './Routes';
 import history from './utils/history';
+<<<<<<< Updated upstream
 import AddCompany from './components/Client/AddCompany'
 import Toolbar from './components/Toolbar/Toolbar'
 import SideDrawer from './components/SideDrawer/SideDrawer'
@@ -42,6 +43,12 @@ class App extends Component {
       <SideDrawer show={this.state.sideDrawerOpen}/>
       {backDrop}
       <main style={{marginTop: '90px', padding :'5px' }}/>
+=======
+// import AddCompany from './components/Client/AddCompany'
+function App() {
+  return (
+    <div className="App">
+>>>>>>> Stashed changes
       <Router history={history}>
         <Routes/>
       </Router>

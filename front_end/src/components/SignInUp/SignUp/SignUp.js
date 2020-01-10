@@ -1,74 +1,69 @@
-import React, { Component } from 'react';
-import { Form, Container, InputGroup, Button } from 'react-bootstrap';
-export class SignUp extends Component {
-  render() {
-    return (
-      <Container>
-        
-        <h1>Sign Up</h1>
-        <Form noValidate>
-          <Form.Group>
-            <Form.Label>email</Form.Label>
-            <InputGroup>
-              <InputGroup.Prepend>
-                <InputGroup.Text id="inputGroupPrepend">
-                  @
-                </InputGroup.Text>
-              </InputGroup.Prepend>
-              <Form.Control
-                type="text"
-                placeholder="user@company.com"
-                aria-describedby="inputGroupPrepend"
-                name="email"
-              />
-            </InputGroup>
-          </Form.Group>
-          <Form.Group controlId="validationFormikPassword">
-            <Form.Group controlId="validationFormikEmail">
-              <Form.Label>First Name</Form.Label>
-              <InputGroup>
-                <Form.Control
-                  type="text"
-                  placeholder="First Name"
-                  aria-describedby="inputGroupPrepend"
-                  name="First_Name"
-                />
-              </InputGroup>
-            </Form.Group>
-            <Form.Label>Last Name</Form.Label>
-            <InputGroup>
-              <Form.Control
-                type="text"
-                placeholder="Last Name"
-                aria-describedby="inputGroupPrepend"
-                name="Last_Name"
-              />
-            </InputGroup>
-          </Form.Group>
-          <Form.Label>Password</Form.Label>
-          <InputGroup>
-            <Form.Control
-              type="password"
-              aria-describedby="inputGroupPrepend"
-              name="password"
-            />
-          </InputGroup>
-          <Form.Group controlId="exampleForm.ControlSelect1">
-            <Form.Label>Type</Form.Label>
-            <Form.Control
-              as="select"
-              type="text"
-              aria-describedby="inputGroupPrepend"
-            ></Form.Control>
-          </Form.Group>
-          <br />
+import React from 'react';
+import {NavLink} from 'react-router-dom';
 
-          <Button type="submit">
-            Sign Up
-          </Button>
-        </Form>
-      </Container>
-    );
-  }
+import '../../../assets/scss/style.scss';
+import Breadcrumb from "../SignIn/Breadcrumb";
+import './Logo.css';
+
+class SignUp extends React.Component {
+    render () {
+        return(
+            <div>
+                <Breadcrumb/>
+                <div className="auth-wrapper">
+                    <div className="auth-content">
+                        <div className="auth-bg">
+                            <span className="r"/>
+                            <span className="r s"/>
+                            <span className="r s"/>
+                            <span className="r"/>
+                        </div>
+                        {/* <div className="card">
+</div> */}
+                        <div className="card">
+                        <div className="Logo mb-4">
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+
+                        <br></br>
+                            </div>
+                            <div className="card-body text-center">
+                                <div className="mb-4">
+                                    <i className="feather icon-user-plus auth-icon"/>
+                                </div>
+                                <h3 className="mb-4">Sign up</h3>
+                                <div className="input-group mb-3">
+                                    <input type="text" className="form-control" placeholder="Username"/>
+                                </div>
+                                <div className="input-group mb-3">
+                                    <input type="email" className="form-control" placeholder="Email"/>
+                                </div>
+                                <div className="input-group mb-4">
+                                    <input type="password" className="form-control" placeholder="password"/>
+                                </div>
+                                <div className="form-group text-left">
+                                    <div className="checkbox checkbox-fill d-inline">
+                                        <input type="checkbox" name="checkbox-fill-2" id="checkbox-fill-2"/>
+                                    </div>
+                                </div>
+                                
+                                <button className="btn btn-primary shadow-2 mb-3">Sign up</button>
+                                <p className="mb-0 text-muted">Allready have an account? <NavLink to="/signIn">Login</NavLink></p>
+                                <br></br>
+                                </div>
+
+                             
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
+
 export default SignUp;
