@@ -5,11 +5,11 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import './states.css'
 import {
-  Nav,
-  Navbar,
-  Form,
-  FormControl,
-  Button,
+  // Nav,
+  // Navbar,
+  // Form,
+  // FormControl,
+  // Button,
   Container,
 } from 'react-bootstrap';
 import color from '@material-ui/core/colors/amber';
@@ -42,7 +42,7 @@ export class States extends Component {
         <Table   aria-label="simple table">
 
         <TableHead>
-          <TableRow style={{backgroundColor: "blue",color:"red"}}>
+          <TableRow className='TableRow'>
             <TableCell  align="centre"><AnnouncementIcon/>IDEAS</TableCell>
             <TableCell align="centre"><DescriptionIcon/>DESCRIPTION</TableCell>
             <TableCell  align="centre"><HourglassEmptyIcon/> STATE</TableCell>
@@ -50,7 +50,7 @@ export class States extends Component {
         </TableHead>
         <TableBody>
         {this.state.states.map(row => (
-          <TableRow key={row.name} style={{backgroundColor: "blue",color:"red"}}>
+          <TableRow className="TableRow">
               <TableCell  align="centre">{row.name}</TableCell>
               <TableCell  align="centre">{row.description}</TableCell>
               <TableCell  align="centre">{row.currentState}</TableCell>

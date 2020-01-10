@@ -8,7 +8,7 @@ const dbconfig = require('../utils/oracledb');
 exports.login=async (req,res,next)=>{
     let connexion = oracledb.getconnexion(dbconfig);
     req.check('type','type is not selected');
-    req.check('password_hashed','password umpty').isLength({ min: 6 });
+    req.check('password_hashed','password not valid').isLength({ min: 6 });
     req.check('email_user','email not valid').isEmail();
     if(req.validationErrors())
     {
@@ -46,7 +46,7 @@ exports.login=async (req,res,next)=>{
                 }
                 else{
                     //i have to console log the user to see the composante of it
-                    const token=jwt.sign({id_user:user[0][0]['id_user']},process.env.TOKEN_SECRET);
+                    const token=jwt.sign({id_user:user.rows['id_research_team']},process.env.TOKEN_SECRET);
                     return res.header('auth_token',token).json({
                         message:'logged succesfully '
                     })   
@@ -78,7 +78,7 @@ exports.login=async (req,res,next)=>{
                 }
                 else{
                     //i have to console log the user to see the composante of it
-                    const token=jwt.sign({id_user:user[0][0]['id_user']},process.env.TOKEN_SECRET);
+                    const token=jwt.sign({id_user:user.rows['id_agent']},process.env.TOKEN_SECRET);
                     return res.header('auth_token',token).json({
                         message:'logged succesfully '
                     })   
@@ -88,3 +88,4 @@ exports.login=async (req,res,next)=>{
         }
     }
 }
+

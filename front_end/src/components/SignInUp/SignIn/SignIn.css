@@ -1,0 +1,18 @@
+.BackGroundSignin {
+    background-image: url(./Blue-Background-Image.jpg);
+    background-position: center;
+    /* width: 100%; */
+    /* margin-left: 50%; */
+    /* margin-bottom: 50%; */
+}
+
+.FormSignin{
+    margin-left: 50;
+    text-shadow: darkgray;
+    padding-left: 200px;
+}
+
+.UM5R{
+    background-image: url(./logo.jpg);
+    bottom: auto;
+}
