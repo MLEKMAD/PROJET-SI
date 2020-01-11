@@ -7,15 +7,17 @@ const sideDrawer = props => {
     if(props.show){
         drawerClasses = 'side-drawer open';
     }
-    
+    const icons = {
+        HomeSharpIcon : <HomeSharpIcon/>,
+        GroupSharpIcon:<GroupSharpIcon/>,
+        SettingsApplicationsSharpIcon:<SettingsApplicationsSharpIcon/>
+    }
     
     return (
     <nav className ={drawerClasses}>
-        <ul>
-        <li><a href ="/"><HomeSharpIcon/> Request</a></li>
-        <li><a href ="/"><GroupSharpIcon/> Team</a></li>
-        <li><a href ="/"><SettingsApplicationsSharpIcon/> Settings</a></li>
-        </ul>
+     <ul> {props.items.map(row=>(
+            <li><a href ={`/${row.href}`}>{icons[row.style]} {row.value}</a></li> ))}
+      </ul>
 
 
     </nav>

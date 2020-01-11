@@ -3,11 +3,10 @@ import { Switch, Route } from 'react-router-dom';
 //import Route from './Route';
 
 import CIRHome from '../components/CIR/CIRHome';
-import States from '../components/CIR/States';
-import Requests from '../components/CIR/Requests';
+import States from '../components/Client/States';
+
 import SignInUp from '../components/SignInUp/SignInUp';
-import Companies from '../components/CIR/Companies';
-import Ideas from '../components/CIR/Ideas';
+
 import AddIdea from '../components/Client/AddIdea';
 import AddCompany from '../components/Client/AddCompany';
 import GUHome from '../components/GU/GUHome'
@@ -23,9 +22,7 @@ export default class Routes extends React.Component {
           
           <States />
         </Route>
-        <Route exact path="/requests">
-          <Requests />
-        </Route>
+       
         <Route exact path="/CIR">
           
           <CIRHome />
@@ -38,12 +35,8 @@ export default class Routes extends React.Component {
           
           <SignInUp />
         </Route>
-        <Route exact path="/companies">
-          <Companies />
-        </Route>
-        <Route exact path="/ideas">
-          <Ideas />
-        </Route>
+        
+       
         <Route exact path="/addIdea">
           <Toolbar />
           <AddIdea />

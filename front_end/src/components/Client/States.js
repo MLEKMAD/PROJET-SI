@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Grid, Tooltip,TableContainer,TableBody,TableCell,TableHead,TableRow,Table } from '@material-ui/core/';
+import { Typography, Grid, Tooltip,TableContainer,TableBody,TableCell,TableHead,TableRow,Table, Link } from '@material-ui/core/';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import DescriptionIcon from '@material-ui/icons/Description';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
@@ -28,7 +28,7 @@ export class States extends Component {
         name: 'compagny',
         description: 'suicide is the solution',
         currentState: 'validated',
-      },
+      }
     ],
   };
 
@@ -39,7 +39,7 @@ export class States extends Component {
           Change the state of requests
         </Typography>
         <TableContainer>
-        <Table   aria-label="simple table">
+        <Table   aria-label="customized   table">
 
         <TableHead>
           <TableRow style={{backgroundColor: "blue",color:"red"}}>
@@ -51,7 +51,7 @@ export class States extends Component {
         <TableBody>
         {this.state.states.map(row => (
           <TableRow key={row.name} style={{backgroundColor: "blue",color:"red"}}>
-              <TableCell  align="centre">{row.name}</TableCell>
+              <TableCell  align="centre"><Link href="/details">{row.name}</Link></TableCell>
               <TableCell  align="centre">{row.description}</TableCell>
               <TableCell  align="centre">{row.currentState}</TableCell>
             </TableRow>
