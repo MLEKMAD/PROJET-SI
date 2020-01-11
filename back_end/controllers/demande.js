@@ -3,7 +3,20 @@ const dbconfig = require('../utils/oracledb');
 // const transport=require('../utils/nodemailer');
 const jwt=require('jsonwebtoken');
 
-exports.getdemande=async (req,res,next)=>{
+
+exports.alldemande=async (req,res,next)=>{
+    let connexion=await oracledb.getConnection(dbconfig);
+    let demandes=await connexion.execute(
+        "SELECT (name_demande,description,type_idea,state) FROM demandes ");
+    await connexion.close();
+// gona us JWT than add the idea 
+    return res.json({
+        message:'get all idea',
+        demandes=demandes.rows
+        });
+};
+
+exports.getdemande=async (req,res,next)=>{//verifie token
     const token =req.header('auth_token');
     const verify = jwt.verify(token,process.env.TOKEN-SECRET)
     let connexion=await oracledb.getConnection(dbconfig);
