@@ -1,44 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route,Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from './Routes';
+import history from './utils/history';
+import AddCompany from './components/Client/AddCompany';
+import Toolbar from './components/Toolbar/Toolbar';
+import SideDrawer from './components/SideDrawer/SideDrawer';
+import BackDrop from './components/BackDrop/BackDrop';
 
+class App extends Component {
+  state = {
+    sideDrawerOpen: false,
+    items:[ { value: 'HOME', style: 'HomeSharpIcon',href:"" },
+    { value: 'TEAM', style: 'GroupSharpIcon',href:"team" },
+    { value: 'SETTINGS', style: 'SettingsApplicationsSharpIcon',href:"settings"  },]
+  };
 
-import SignInUp from './components/SignInUp/SignInUp';
-import { CIRHome } from './components/CIR/CIRHome';
-import { CIRNavbar} from './components/CIR/CIRNavbar';
-import {AddIdea} from './components/Client/AddIdea'
-import {CNavbar} from './components/Client/CNavbar'
+  drawerToggleClickHandler = () => {
+    this.setState(prevState => ({
+      sideDrawerOpen: !prevState.sideDrawerOpen,
+    }));
+  };
 
-
-function App() {
-  return (
+  backDropClickHandler = () => {
+    this.setState({ sideDrawerOpen: false });
+  };
   
-    <div className="App">
-      <Router>
-      <Switch>
-          <Route exact path='/SignUp'>
-            <SignInUp/>
-          </Route>
-          <Route exact path='/SignIn'>
-            <SignInUp/>
-          </Route>
-          <Route exact path='/addIdea'>
-            <CNavbar/>
-            <AddIdea/>
-          </Route>
-          <Route exact path='/CIR'>
-            <CIRNavbar/>
-            <CIRHome/>
-          </Route>
-          <Route path='/'>
-            <SignInUp/>
-          </Route>
-      </Switch>
-      </Router>
-    </div>
-  );
+
+  render() {
+    let backDrop;
+    if (this.state.sideDrawerOpen) {
+      backDrop = <BackDrop click={this.backDropClickHandler} />;
+    }
+
+    return (
+      <div style={{ height: '100%' }}>
+        <Toolbar drawerClickHandler={this.drawerToggleClickHandler} />
+        <SideDrawer
+          items={this.state.items}
+          show={this.state.sideDrawerOpen}
+        />
+        {backDrop}
+        <main style={{ marginTop: '90px', padding: '5px' }} />
+        <Router history={history}>
+          <Routes />
+        </Router>
+      </div>
+    );
+  }
 }
-
-
 export default App;
