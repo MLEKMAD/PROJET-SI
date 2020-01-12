@@ -9,7 +9,7 @@ export class CIRHome extends Component{
                     <h1>Request </h1>
                     <p>description</p>
                     <p>
-                        <button variant='primary'>
+                        <button variant='primary' >
                             Details
                         </button>
                     </p>
