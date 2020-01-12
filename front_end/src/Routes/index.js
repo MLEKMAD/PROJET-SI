@@ -14,6 +14,7 @@ import Pending from '../components/GU/Pending';
 import Statistics from '../components/GU/Statistics';
 import toolbar from '../components/Toolbar/Toolbar'
 import { Toolbar } from '@material-ui/core';
+import Details from '../components/CIR/Details';
 export default class Routes extends React.Component {
   render() {
     return (
@@ -48,6 +49,10 @@ export default class Routes extends React.Component {
         <Route exact path="/pending">
           
           <Pending/>
+        </Route>
+        <Route  path="/details ">
+          <Toolbar/>
+          <Details/>
         </Route>
         <Route exact path="/statistics">
           
