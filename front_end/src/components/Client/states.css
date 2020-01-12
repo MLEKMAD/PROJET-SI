@@ -2,8 +2,16 @@
 body {
     padding: 40px;
     font-family: Arial;
+<<<<<<< HEAD:front_end/src/components/Client/states.css
 }
   TableCell {
     background-color:blue;
 
+=======
+    text-align: center;
+  }
+  .TableRow {
+    background-color: #35a571;
+    
+>>>>>>> master:front_end/src/components/CIR/states.css
   }

@@ -42,7 +42,7 @@ export class States extends Component {
         <Table   aria-label="customized   table">
 
         <TableHead>
-          <TableRow style={{backgroundColor: "blue",color:"red"}}>
+          <TableRow className='TableRow'>
             <TableCell  align="centre"><AnnouncementIcon/>IDEAS</TableCell>
             <TableCell align="centre"><DescriptionIcon/>DESCRIPTION</TableCell>
             <TableCell  align="centre"><HourglassEmptyIcon/> STATE</TableCell>
@@ -50,8 +50,13 @@ export class States extends Component {
         </TableHead>
         <TableBody>
         {this.state.states.map(row => (
+<<<<<<< HEAD:front_end/src/components/Client/States.js
           <TableRow key={row.name} style={{backgroundColor: "blue",color:"red"}}>
               <TableCell  align="centre"><Link href="/details">{row.name}</Link></TableCell>
+=======
+          <TableRow className="TableRow">
+              <TableCell  align="centre">{row.name}</TableCell>
+>>>>>>> master:front_end/src/components/CIR/States.js
               <TableCell  align="centre">{row.description}</TableCell>
               <TableCell  align="centre">{row.currentState}</TableCell>
             </TableRow>
