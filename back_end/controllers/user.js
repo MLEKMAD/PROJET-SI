@@ -2,22 +2,37 @@ const bcrypt=require('bcryptjs')
 const validatePhoneNumber = require('validate-phone-number-node-js');
 const lencrypt=bcrypt.genSalt(10);
 const oracledb=  require('oracledb'); // not sure
+oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
 const dbconfig = require('../utils/oracledb');
 const jwt=require('jsonwebtoken');
 
 exports.getuser=async(req,res,next)=>{
-    const token =req.header('auth_token');
-    const verify = jwt.verify(token,process.env.TOKEN-SECRET);
-    console.log("getuser in user , verify= ",verify);
+    // const token =req.header('auth_token');
+    // const verify = jwt.verify(token,process.env.TOKEN-SECRET);
+    // console.log("getuser in user , verify= ",verify);
     let connexion=await oracledb.getConnection(dbconfig);
-    let users=await connexion.execute("SELECT * FROM user,university WHERE id_user= ?",[verify]);// verify this
+    // let users=await connexion.execute("SELECT * FROM user,university WHERE id_user= ?",[verify]);// verify this
     console.log(users);
     await connexion.close();
 
     return res.json({
         message:'get user',
-        users=users.rows
+        users:users.rows
     });
+};
+
+exports.getalluser=async(req,res,next)=>{
+    let connexion=await oracledb.getConnection(dbconfig);
+    if(connexion) {console.log('connected')
+    let users=await connexion.execute("select id_university from UNIVERSITIES ");// verify this
+    console.log(users);
+    // await connexion.close();
+
+    return res.json({
+        message:'get user',
+        users:users.rows
+    });
+}else{console.log("no connexion")}
 };
 
 
@@ -73,7 +88,7 @@ exports.postuser=async(req,res,next)=>{
                 await connection.close();
                 return res.status(201).json({
                     message:'POST user . user created succesfully ',
-                    user=user.rows
+                    user:user.rows
                 });
             }else{
                 let agent=await connexion.execute(
@@ -89,7 +104,7 @@ exports.postuser=async(req,res,next)=>{
                 await connection.close();
                 return res.status(201).json({
                     message:'POST user . user created succesfully ',
-                    agent=agent.rows
+                    agent:agent.rows
                 });
             }
         }

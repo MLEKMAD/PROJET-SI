@@ -7,13 +7,13 @@ exports.getpool=async (req,res,next)=>{
     await connection.close(); 
     return res.status(200).json({
         message:'get competences pool success',
-        compentences=compentences.rows //i have to filter this value
+        compentences:compentences.rows //i have to filter this value
     });
 }
 
 exports.postpool= async (req,res,next)=>{
     let connexion=await oracledb.getConnection(dbconfig);
-    let compentences=await connexion.execute(" INSERT INTO competences_pool values(name_pool,responsable_pool)");
+    let compentences=await connexion.execute(" INSERT INTO competences_pool values(id_competences_pool.nextval,name_pool,responsable_pool)");
     await connection.close(); 
     return res.status(200).json({
         message:'added competence to competences pool successfully',

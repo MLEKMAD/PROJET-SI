@@ -18,7 +18,7 @@ exports.updatedemande=async(req,res,next)=>{
     await connection.close();
     return res.json({
         message:'update idea in state demande',
-        demandes=demandes.rows
+        demandes:demandes.rows
         });
 
 };
