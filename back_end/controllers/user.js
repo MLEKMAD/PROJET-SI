@@ -24,7 +24,7 @@ exports.getuser=async(req,res,next)=>{
 exports.getalluser=async(req,res,next)=>{
     let connexion=await oracledb.getConnection(dbconfig);
     if(connexion) {console.log('connected')
-    let users=await connexion.execute("SELECT ID_UNIVERSITY FROM hr.UNIVERSITIES");// verify this
+    let users=await connexion.execute("select id_university from UNIVERSITIES ");// verify this
     console.log(users);
     // await connexion.close();
 
