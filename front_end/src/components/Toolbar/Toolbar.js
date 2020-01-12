@@ -11,13 +11,7 @@ const toolbar = props =>(
             </div>
             <div className = "toolbar_logo"> <a href="/"> THE LOGO</a></div>
             <div className ="spacer"></div>
-            <div className ="toolbar_navigation-items">
-                <ul>
-                    <li> <a href="/">Requests</a> </li>
-                    <li> <a href="/">Team</a> </li>
-                    <li> <a href="/">Settings</a> </li>
-                </ul>
-            </div>
+            
         </nav>
     </header>
 );
