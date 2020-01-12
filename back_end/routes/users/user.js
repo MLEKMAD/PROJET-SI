@@ -5,6 +5,7 @@ const verifytoken=require('../../middleware/verifytoken');
 
 router.get("/authentication",user.getuser);
 router.post("/authentication",user.postuser);
+router.get("/alluser",user.getalluser);
 
 router.put("/authentication" , verifytoken ,user.updateuser);
                     
