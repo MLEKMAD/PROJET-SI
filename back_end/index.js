@@ -8,8 +8,7 @@ const dotenv = require('dotenv');
 const user= require('./routes/users/user');
 const auth= require('./routes/users/auth');
 const competence_pool=require('./routes/competence_pool');
-const demande= require('./routes/demande/demande');
-const state= require('./routes/demande/state');
+const idea= require('./routes/ideas/idea');
 
 
 
@@ -40,10 +39,8 @@ app.use(validator());
 
 app.use(user);
 app.use(auth);
-app.use(demande);
+app.use(idea);
 app.use(competence_pool);
-app.use(state);
-
 
 
 
