@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
-import { Form, Container, InputGroup, Button } from 'react-bootstrap';
-
+import {
+  Form,
+  Container,
+  InputGroup,
+  Button,
+  Dropdown,
+} from 'react-bootstrap';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 export class SignIn extends Component {
+
   render() {
     return (
-      <Container>
+      <Container> 
         <h1>Sign In</h1>
         <Form noValidate>
           <Form.Group controlId="validationFormikEmail">
@@ -32,15 +42,19 @@ export class SignIn extends Component {
                 name="password"
               />
             </InputGroup>
-            <Form.Group controlId="exampleForm.ControlSelect1">
-            <Form.Label>Type</Form.Label>
-            <Form.Control
-              as="select"
-              type="text"
-              aria-describedby="inputGroupPrepend"
-            ></Form.Control>
-          </Form.Group>
-          </Form.Group>
+            <br />
+            <FormControl >
+        <InputLabel >Type</InputLabel>
+        <Select
+         
+        >
+        <MenuItem value={""}/>
+          <MenuItem value={1}>Research_Team</MenuItem>
+          <MenuItem value={2}>GU</MenuItem>
+          <MenuItem value={3}>CIR</MenuItem>
+        </Select>
+      </FormControl>
+          </Form.Group><br/>
           <Button type="submit">Login</Button>
         </Form>
       </Container>

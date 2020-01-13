@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 import { Form, Container, InputGroup, Button } from 'react-bootstrap';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
+
 export class SignUp extends Component {
   render() {
     return (
@@ -53,16 +59,19 @@ export class SignUp extends Component {
               name="password"
             />
           </InputGroup>
-          <Form.Group controlId="exampleForm.ControlSelect1">
-            <Form.Label>Type</Form.Label>
-            <Form.Control
-              as="select"
-              type="text"
-              aria-describedby="inputGroupPrepend"
-            ></Form.Control>
-          </Form.Group>
+          <FormControl >
+        <InputLabel >Type</InputLabel>
+        <Select
+         
+        >
+        <MenuItem value={""}/>
+          <MenuItem value={1}>Research_Team</MenuItem>
+          <MenuItem value={2}>GU</MenuItem>
+          <MenuItem value={3}>CIR</MenuItem>
+        </Select>
+      </FormControl>
           <br />
-
+          <br/>
           <Button type="submit">
             Sign Up
           </Button>

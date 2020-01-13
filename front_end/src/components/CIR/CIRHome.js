@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Jumbotron } from 'react-bootstrap';
+import Button from '@material-ui/core/Button';
+import Details from './Details'
 import {
   Typography,
   Grid,
@@ -37,6 +39,9 @@ export class CIRHome extends Component {
     ],
     competences_pool: ['UM5s', 'ANA'],
   };
+  DetailsFunc= (key)=>{
+    
+  }
   render() {
     return (
       <div>
@@ -52,16 +57,6 @@ export class CIRHome extends Component {
                   <AnnouncementIcon />
                   IDEAS
                 </TableCell>
-                <TableCell align="centre">
-                  <DescriptionIcon />
-                  DESCRIPTION
-                </TableCell>
-                <TableCell align="centre">
-                  <HourglassEmptyIcon /> STATE
-                </TableCell>
-                <TableCell align="centre">
-                  <HourglassEmptyIcon /> competence_pool
-                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -74,13 +69,9 @@ export class CIRHome extends Component {
                     <Link href="/details">{row.name}</Link>
                   </TableCell>
                   <TableCell align="centre">
-                    {row.description}
-                  </TableCell>
-                  <TableCell align="centre">
-                    {row.currentState}
-                  </TableCell>
-                  <TableCell align="centre">
-                    {row.competence_pool}
+                  <Button variant="outlined" color="secondary" onclick={()=>()=>this.DetailsFunc(row.name)}>
+                details
+            </Button>
                   </TableCell>
                 </TableRow>
               ))}
