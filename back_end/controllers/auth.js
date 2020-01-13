@@ -78,7 +78,7 @@ exports.login=async (req,res,next)=>{
                 }
                 else{
                     //i have to console log the user to see the composante of it
-                    const token=jwt.sign({id_user:user.rows['id_agent']},process.env.TOKEN_SECRET);
+                    const token=jwt.sign({id_user:user.rows['id_agent']},process.env.TOKEN_SECRET,{ expiresIn: '30min' });
                     return res.header('auth_token',token).json({
                         message:'logged succesfully '
                     })   
@@ -89,3 +89,16 @@ exports.login=async (req,res,next)=>{
     }
 }
 
+
+
+
+exports.logout=async (req,res,next)=>{
+    const token =req.header('auth_token');
+    token ="";
+
+    res.sendStatus(204).json({
+        message :"logout done"
+    })
+
+
+}

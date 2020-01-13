@@ -3,8 +3,8 @@ const dbconfig = require('../utils/oracledb');
 
 exports.getpool=async (req,res,next)=>{
     let connexion=await oracledb.getConnection(dbconfig);
-    let compentences=await connexion.execute("SELECT (name_pool,responsable_name) FROM competences_pool");
-    await connection.close(); 
+    let compentences=await connexion.execute("SELECT * FROM competences_pool");
+    // const closeconn=await connection.close(); 
     return res.status(200).json({
         message:'get competences pool success',
         compentences:compentences.rows //i have to filter this value
@@ -13,8 +13,15 @@ exports.getpool=async (req,res,next)=>{
 
 exports.postpool= async (req,res,next)=>{
     let connexion=await oracledb.getConnection(dbconfig);
-    let compentences=await connexion.execute(" INSERT INTO competences_pool values(id_competences_pool.nextval,name_pool,responsable_pool)");
-    await connection.close(); 
+    console.log(req.body.name_competences_pool,'|||' ,req.body.responsable_name)
+    let compentences=await connexion.execute(
+        " INSERT INTO competences_pool  (id_competences_pool,name_competences_pool,responsable_name) values(id_competences_pool.nextval,:name_competences_pool,:responsable_name)",
+    [
+        req.body.name_competences_pool,
+        req.body.responsable_name
+    ]   
+    );
+    // await connection.close(); 
     return res.status(200).json({
         message:'added competence to competences pool successfully',
     });

@@ -7,14 +7,12 @@ const dbconfig = require('../utils/oracledb');
 const jwt=require('jsonwebtoken');
 
 exports.getuser=async(req,res,next)=>{
-    // const token =req.header('auth_token');
-    // const verify = jwt.verify(token,process.env.TOKEN-SECRET);
-    // console.log("getuser in user , verify= ",verify);
+    const token =req.header('auth_token');
+    const id_user=jwt.verify(token, process.env.TOKEN_SECRET);
+    console.log("getuser in user , id_user= ",id_user);
     let connexion=await oracledb.getConnection(dbconfig);
-    // let users=await connexion.execute("SELECT * FROM user,university WHERE id_user= ?",[verify]);// verify this
-    console.log(users);
+    let users=await connexion.execute("SELECT * FROM user,university WHERE id_user= ?",[id_user]);// verify this
     await connexion.close();
-
     return res.json({
         message:'get user',
         users:users.rows
@@ -23,67 +21,65 @@ exports.getuser=async(req,res,next)=>{
 
 exports.getalluser=async(req,res,next)=>{
     let connexion=await oracledb.getConnection(dbconfig);
-    if(connexion) {console.log('connected')
-    let users=await connexion.execute("select id_university from UNIVERSITIES ");// verify this
-    console.log(users);
-    // await connexion.close();
-
+    let users=await connexion.execute("select * from research_team ");// verify this
+    await connexion.close();
     return res.json({
         message:'get user',
         users:users.rows
     });
-}else{console.log("no connexion")}
-};
-
+}
 
 
 exports.postuser=async(req,res,next)=>{
-    let connexion=await oracledb.getConnection(dbconfig);
-    req.check('full_name','full name umpty').notEmpty();
-    req.check('password_hashed','password umpty').isLength({ min: 6 });
-    req.check('email_user','email not valid').isEmail();
-    req.check('phone_number_user','number not valide').isLength({min:10})
+    req.check('name_team',' name umpty').notEmpty();
+    req.check('full_name_research_team','full name umpty').notEmpty();
+    req.check('password_hashed_research_team','password umpty').notEmpty();
+    req.check('email_research_team','email not valid').isEmail();
+    req.check('phone_number_research_team','number not valide').isLength({min:10})
+    console.log('checking done');
     const phone_number_valide = validatePhoneNumber.validate(req.body.phone_number_user);
     if(!phone_number_valide){
-        await connection.close();
         return res.status(400).json({
             message:'error postuser / phone number not valide '
         });
     }
     // try nd catch error 
     var errors=req.validationErrors();
+    console.log(errors)
     if(errors){
-        await connection.close();
         return res.status(400).json({
             message:'error postuser / data not valide user post'
         });
     }
     else{
-        console.log('ana 9Bel userexiste');
+        let connexion=await oracledb.getConnection(dbconfig);
 
+        console.log('no error');
+        if(req.body.research_team==1){
+        console.log("add research_team");
         let userexiste =await connexion.execute(
-            "SELECT email_user FROM user WHERE email_user=?",
-            [req.body.email_user]);
-        console.log('userexiste == ', userexiste) ;
+            "SELECT email_research_team FROM research_team WHERE email_research_team=?",
+            [req.body.email_research_team]);
         
         if(userexiste){
             await connection.close();
             return res.status(400).json({
                 message :'user postuser /user already existe'
             });
-        }else{
+        }
             const HashedPassword = await bcrypt.hash(req.body.password_hashed,lencrypt);
             //research_team and agent
-            if(req.body.research_team=1){
                 
                 let user=await connexion.execute(
-                    "INSERT INTO research_team values(full_name , password_hashed ,email_user, phone_number,name_team)",
-                    [   req.body.full_name ,
+                    "INSERT INTO research_team  (id_research_team,name_team,full_name_research_team , password_hashed__research_team ,email_research_team, phone_number_research_team)  values(id_research_team.nextval,:name_team,:full_name_research_team ,:password_hashed__research_team ,:email_research_team, :phone_number_research_team)",
+                    [   req.body.name_team,
+                        req.body.full_name_research_team ,
                         HashedPassword,
-                        req.body.email_user ,
-                        req.body.phone_number,
-                        req.body.name_team
+                        req.body.email_research_team ,
+                        req.body.phone_number_research_team,
                     ]);
+                const commit = await connexion.execute('commit');
+
     
                 await connection.close();
                 return res.status(201).json({
@@ -91,15 +87,17 @@ exports.postuser=async(req,res,next)=>{
                     user:user.rows
                 });
             }else{
+                console.log("add agent");
+
                 let agent=await connexion.execute(
-                    "INSERT INTO agent values(full_name , password_hashed ,email_user, phone_number,id_user)",
-                    [   req.body.full_name ,
-                        HashedPassword,
-                        req.body.email_user ,
-                        req.body.phone_number,
-                        req.body.name_team,
-                        req.body.id_user
+                    "INSERT INTO agent (id_agent,full_name_agent, password_hashed_agent ,email_agent, phone_number_agent)  values(id_agent.nextval,:full_name_agent, :password_hashed_agent ,:email_agent, :phone_number_agent)",
+                    [   req.body.full_name_research_team ,
+                        HashedPassword_research_team,
+                        req.body.email_research_team ,
+                        req.body.phone_number_research_team,
                     ]);
+                const commit = await connexion.execute('commit');
+                
     
                 await connection.close();
                 return res.status(201).json({
@@ -107,21 +105,20 @@ exports.postuser=async(req,res,next)=>{
                     agent:agent.rows
                 });
             }
-        }
-
     }
 };
 
 // update data user when user logged in 
 exports.updateuser=async(req,res,next)=>{
-    req.check('password_hashed','password umpty').isLength({ min: 6 });
+    console.log("password_hashed_research_team : ",req.body.password_hashed_research_team ,"\n id_research_team : ",req.params.id_research_team)
     let connexion=await oracledb.getConnection(dbconfig);
     const HashedPassword = await bcrypt.hash(req.body.password_hashed,lencrypt);
     let users=await connexion.execute(
-        "UPDATE user set(password_hashed=?) WHERE id_user= ?",
-        [   password_hashed,
-            req.params.id_user]);
-//compare with oracle bdd
+        "UPDATE research_team set(password_hashed_research_team=?) WHERE id_research_team= ?",
+        [   req.body.password_hashed_research_team,
+            req.params.id_research_team]);
+    const commit = await connexion.execute('commit');
+        
     await connection.close();
     return res.status(201).json({
         message:'update user successfully'

@@ -1,11 +1,76 @@
+### user routes 
 GET http://localhost:8060/alluser
 ###
+GET http://localhost:8060/authentication
+auth_token : 
+###
+POST http://localhost:8060/authentication
+Content-Type: application/json 
 
+{
+    "research_team":"0",
+    "name_team":"ensiasteam",
+    "full_name_research_team" : "hatim lahlali",
+    "password_hashed_research_team" : "jay",
+    "email_research_team" : "hathat@hotmail.fr",
+    "phone_number_research_team" : "09458453"
+}
+
+###
+PUT http://localhost:8060/authentication?id_research_team=id
+Content-Type: application/json 
+
+{
+    "password_hashed_research_team":"PasswordChanged"
+}
+
+
+
+
+###demande route
+GET http://localhost:8060/demande
+###
+POST  http://localhost:8060/demande
+Content-Type: application/json
+
+{
+
+}
+###
+POST  http://localhost:8060/demande?id_demande=id
+Content-Type: application/json
+
+{
+
+}
+###
+DELETE http://localhost:8060/demande?id_demadne=id
+### add auth token
+GET http://localhost:8060/alldemande
+###state
+POST http://localhost:8060/state?id_demande=id
+Content-Type: application/json
+
+{
+
+}
+###competences pool route
+GET http://localhost:8060/competencepool
+###
+POST http://localhost:8060/competencepool
+Content-Type: application/json
+
+{
+    "name_competences_pool":"tech",
+    "responsable_name":"hamid"
+}
+
+### login route
 POST http://localhost:8060/login
 Content-Type: application/json
 
 {
-    email_user:
-    password_hashed:
-    type:
+    "email_user":,
+    "password_hashed":,
+    "type":
 }
