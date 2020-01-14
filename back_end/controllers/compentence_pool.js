@@ -24,5 +24,6 @@ exports.postpool= async (req,res,next)=>{
     // await connection.close(); 
     return res.status(200).json({
         message:'added competence to competences pool successfully',
+        compentences
     });
 }

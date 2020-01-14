@@ -6,10 +6,8 @@ const jwt=require('jsonwebtoken');
 
 exports.alldemande=async (req,res,next)=>{
     let connexion=await oracledb.getConnection(dbconfig);
-    let demandes=await connexion.execute(
-        "SELECT (name_demande,description,type_idea,state) FROM demandes ");
+    let demandes=await connexion.execute("SELECT * FROM demandes");
     await connexion.close();
-// gona us JWT than add the idea 
     return res.json({
         message:'get all idea',
         demandes:demandes.rows
@@ -18,13 +16,12 @@ exports.alldemande=async (req,res,next)=>{
 
 exports.getdemande=async (req,res,next)=>{//verifie token
     const token =req.header('auth_token');
-    const verify = jwt.verify(token,process.env.TOKEN_SECRET);
+    const id_user = jwt.verify(token,process.env.TOKEN_SECRET);
     let connexion=await oracledb.getConnection(dbconfig);
     let demandes=await connexion.execute(
-        "SELECT (name_demande,description,type_idea,state) FROM demandes WHERE id_research_team= ?",
-        [verify]);
+        "SELECT (name_demande,description,type_idea,state) FROM demandes WHERE id_research_team=:id_research_team",
+        [id_user]);
     await connexion.close();
-// gona us JWT than add the idea 
     return res.json({
         message:'get all idea',
         demandes:demandes.rows
@@ -44,23 +41,26 @@ exports.postdemande=async (req,res,next)=>{
         });
     }
     else{
+        const type_idea='init';
+        const state=0;
+        const id_competence_pool=0;
+
         const token =req.header('auth_token');
         const id_user = jwt.verify(token,process.env.TOKEN_SECRET)
         let connexion=await oracledb.getConnection(dbconfig);
         //see the outpout of verify 
-        // let id_idea=await connexion.execute(
-        //     "SELECT id_demande FROM demandes WHERE id_user=?",
-        //     [verify]);
+        let id_idea=await connexion.execute(
+            "SELECT id_demande FROM demandes WHERE id_user=:id_user",
+            [id_user]);
         let demandes=await connexion.execute(
-            "INSERT INTO demandes (id_demande,name_demande,description,type_idea,state,id_research_team) VALUES (id_demande.nextval,:name_demande,:description,:type_idea,:state,:id_research_team)",
+            "INSERT INTO demandes (id_demande,name_demande,description,type_idea,state,id_competence_pool) VALUES (id_demande.nextval,:name_demande,:description,:type_idea,:state,:id_competences_pool)",
             [   req.body.name_demande ,
                 req.body.description ,
-                req.body.type_idea , 
-                req.body.state,
-                id_user
+                type_idea , 
+                state,
+                id_competence_pool
             ]);
-    const commit = await connexion.execute('commit');
-        
+        const commit = await connexion.execute('commit');   
         await connexion.close();
         if(demandes!== undefined){
             return res.json({
@@ -72,22 +72,21 @@ exports.postdemande=async (req,res,next)=>{
 };
 
 exports.updatedemande=async(req,res,next)=>{
-    const token =req.header('auth_token');
-    const id_user = jwt.verify(token,process.env.TOKEN_SECRET);
+    let id_competence_pool= await getpool(req.body.name_competence_pool);
     let connexion=await oracledb.getConnection(dbconfig);
     let demandes=await connexion.execute(
-        "UPDATE demandes set(name_demande=?,description=?,state=0) WHERE id_idea= ? and id_user=?",
-    [   req.body.name_demande ,
-        req.body.description,
-        req.params.id_demande,
-        id_user
+        `UPDATE demandes set 
+        type_idea =:type_idea,state=:state,id_competence_pool=:id_competence_pool
+        WHERE id_demande=:id_demande`  ,
+    [   req.body.type_idea ,
+        req.body.state,
+        id_competence_pool.ID_COMPETENCES_POOL,
+        req.params.id_demande
     ]);
     const commit = await connexion.execute('commit');
-
-    await connection.close();
+    await connexion.close();
     return res.json({
-        message:'update idea',
-        demandes:demandes.rows
+        message:'updatesd idea',
         });
 
 };
@@ -95,16 +94,26 @@ exports.updatedemande=async(req,res,next)=>{
 
 exports.deletedemande=async(req,res,next)=>{
     //update from db
+    console.log(req.params.id_demande)
     let connexion=await oracledb.getConnection(dbconfig);
     let demandes=await connexion.execute(
-        "DELETE FROM demandes WHERE id_demandes= ?",
-        [req.params.id_demande,
-        ]);
+        "DELETE FROM demandes WHERE id_demande=:id_demande",
+        [req.params.id_demande]);
         const commit = await connexion.execute('commit');
-    
-    await connection.close();
+    await connexion.close();
 
     return res.json({
         message:'delete idea', 
     });
 };
+
+
+const getpool = async (name_competence_pool) => {
+    let connexion = await oracledb.getConnection(dbconfig);
+    console.log('i am here', name_competence_pool)
+    let pool = await connexion.execute(
+        "SELECT id_competences_pool FROM competences_pool WHERE name_competences_pool=:name_competences_pool",
+        [name_competence_pool]);
+        console.log('kaejffaef :',pool.rows)
+    return pool.rows[0];
+}

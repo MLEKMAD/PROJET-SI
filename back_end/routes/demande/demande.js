@@ -8,9 +8,9 @@ router.get('/demande', verifytoken , demande.getdemande);
 
 router.post('/demande', verifytoken , demande.postdemande);
 
-router.put('/demande?id_demande=id', verifytoken , demande.updatedemande);
+router.put('/demande/:id_demande' , verifytoken , demande.updatedemande);
 
-router.delete('/demande?id_demande=id', verifytoken , demande.deletedemande);
+router.delete('/demande/:id_demande' , demande.deletedemande);
 
 router.get('/alldemande',verifytoken,demande.alldemande);
 

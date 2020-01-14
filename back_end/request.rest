@@ -1,23 +1,34 @@
-### user routes 
+### user routes work well
 GET http://localhost:8060/alluser
-###
+### verify work well
 GET http://localhost:8060/authentication
-auth_token : 
-###
+# auth_token: get the token after the login 
+### work welll
 POST http://localhost:8060/authentication
 Content-Type: application/json 
 
 {
-    "research_team":"0",
+    "nameuniversity":"ensias",
+    "research_team":"1",
     "name_team":"ensiasteam",
-    "full_name_research_team" : "hatim lahlali",
+    "full_name_research_team" : "hatim",
     "password_hashed_research_team" : "jay",
     "email_research_team" : "hathat@hotmail.fr",
     "phone_number_research_team" : "09458453"
 }
+### work well
+POST http://localhost:8060/authentication
+Content-Type: application/json 
 
-###
-PUT http://localhost:8060/authentication?id_research_team=id
+{
+    "research_team" : "3",
+    "full_name_agent" : "GU",
+    "password_hashed_agent" : "jdsh",
+    "email_agent" : "hafthdfat@hotmail.fr",
+    "phone_number_agent" : "09458453"
+}
+### work well
+PUT http://localhost:8060/authentication/6
 Content-Type: application/json 
 
 {
@@ -29,31 +40,32 @@ Content-Type: application/json
 
 ###demande route
 GET http://localhost:8060/demande
-###
+# auth_token: get the token after the login 
+
+### need auth 
 POST  http://localhost:8060/demande
+# auth_token: get the token after the login 
+
+Content-Type: application/json
+
+
+{
+    "name_demande":"first",
+    "description":"this is the first demande",
+}
+### work well 
+PUT  http://localhost:8060/demande/2
 Content-Type: application/json
 
 {
-
+    "type_idea":"first type",
+    "state":"1",
+    "name_competence_pool":"first_competences"
 }
-###
-POST  http://localhost:8060/demande?id_demande=id
-Content-Type: application/json
-
-{
-
-}
-###
-DELETE http://localhost:8060/demande?id_demadne=id
+### work well
+DELETE http://localhost:8060/demande/2
 ### add auth token
 GET http://localhost:8060/alldemande
-###state
-POST http://localhost:8060/state?id_demande=id
-Content-Type: application/json
-
-{
-
-}
 ###competences pool route
 GET http://localhost:8060/competencepool
 ###
@@ -61,8 +73,8 @@ POST http://localhost:8060/competencepool
 Content-Type: application/json
 
 {
-    "name_competences_pool":"tech",
-    "responsable_name":"hamid"
+    "name_competences_pool":"info",
+    "responsable_name":"hamgggid"
 }
 
 ### login route
@@ -70,7 +82,7 @@ POST http://localhost:8060/login
 Content-Type: application/json
 
 {
-    "email_user":,
-    "password_hashed":,
-    "type":
+    "email_user":"hathat@hotmail.fr",
+    "password_hashed":"hatidsm",
+    "type":"2"
 }
