@@ -42,6 +42,7 @@ exports.postuser = async (req, res, next) => {
     const research_team=req.body.research_team;
     let connexion = await oracledb.getConnection(dbconfig);
     if (research_team == 1) {
+        const id_demande=0;
             const {
                 nameuniversity,
                 name_team,
@@ -79,13 +80,14 @@ exports.postuser = async (req, res, next) => {
         //research_team and agent
         console.log('hashed :', HashedPassword)
         let user = await connexion.execute(
-            "INSERT INTO research_team (id_research_team,name_team,full_name_research_team,password_hashed_research_team ,phone_number_research_team,email_research_team,id_university) values(id_research_team.nextval,:name_team,:full_name_research_team ,:password_hashed_research_team , :phone_number_research_team , :email_research_team,:id_university)",
+            "INSERT INTO research_team (id_research_team,name_team,full_name_research_team,password_hashed_research_team ,phone_number_research_team,email_research_team,id_university,id_demande) values(id_research_team.nextval,:name_team,:full_name_research_team ,:password_hashed_research_team , :phone_number_research_team , :email_research_team,:id_university,:id_demande)",
             [name_team,
                 full_name_research_team,
                 HashedPassword,
                 phone_number_research_team,
                 email_research_team,
-                id_university
+                id_university,
+                id_demande
             ]);
         const commit = await connexion.execute('commit');
 

@@ -19,7 +19,7 @@ exports.getdemande=async (req,res,next)=>{//verifie token
     const id_user = jwt.verify(token,process.env.TOKEN_SECRET);
     let connexion=await oracledb.getConnection(dbconfig);
     let demandes=await connexion.execute(
-        "SELECT (name_demande,description,type_idea,state) FROM demandes WHERE id_research_team=:id_research_team",
+        "SELECT * FROM demandes WHERE id_research_team=:id_research_team",
         [id_user]);
     await connexion.close();
     return res.json({
@@ -61,6 +61,14 @@ exports.postdemande=async (req,res,next)=>{
                 id_competence_pool
             ]);
         const commit = await connexion.execute('commit');   
+        
+        let users = await connexion.execute(
+            "UPDATE research_team set  id_demande =: id_demande  WHERE  id_research_team =: id_research_team",
+            [   demandes.rows[0].ID_DEMANDE,
+                id_user
+            ]);     
+        const commit = await connexion.execute('commit');
+        
         await connexion.close();
         if(demandes!== undefined){
             return res.json({

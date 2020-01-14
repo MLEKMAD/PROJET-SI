@@ -86,3 +86,14 @@ Content-Type: application/json
     "password_hashed":"hatidsm",
     "type":"2"
 }
+### add auth_token
+GET http://localhost:8060/startup
+auth_token :
+
+POST http://localhost:8060/startup/2/29
+Content-Type: application/json
+
+{
+    "name_startup":"first startup",
+    "business_plan":"this is a dummy businness plan to test our project IVON UM5R"
+}
