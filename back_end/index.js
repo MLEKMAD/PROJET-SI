@@ -9,6 +9,7 @@ const user= require('./routes/users/user');
 const auth= require('./routes/users/auth');
 const competence_pool=require('./routes/competence_pool');
 const demande= require('./routes/demande/demande');
+const startup=require('./routes/startup');
 
 
 
@@ -41,7 +42,7 @@ app.use(user);
 app.use(auth);
 app.use(demande);
 app.use(competence_pool);
-
+app.use(startup);
 
 
 

@@ -6,16 +6,14 @@ const dbconfig = require('../utils/oracledb');
 const jwt = require('jsonwebtoken');
 
 exports.getuser = async (req, res, next) => {
-    const token = req.header('auth_token');
-    const id_research_team = jwt.verify(token, process.env.TOKEN_SECRET);
-    console.log("getuser in user , id_user= ", id_user);
+    console.log("rrrr " , req.body.id_research_team)
     let connexion = await oracledb.getConnection(dbconfig);
     let users = await connexion.execute(   
     `SELECT * FROM research_team JOIN universities 
     ON research_team.id_university=universities.id_university 
     and  research_team.id_research_team = : id_research_team  `  ,
-    [id_research_team]); // verify this
-    // await connexion.close();
+    [req.body.id_research_team]); // verify this
+    await connexion.close();
     return res.json({
         message: 'get user',
         users: users.rows

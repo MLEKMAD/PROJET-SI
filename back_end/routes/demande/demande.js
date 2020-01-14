@@ -4,9 +4,9 @@ const demande=require('../../controllers/demande');
 const verifytoken=require('../../middleware/verifytoken');
 
 
-router.get('/demande', verifytoken , demande.getdemande);
+router.get('/demande/:id_research_team', verifytoken , demande.getdemande);
 
-router.post('/demande', verifytoken , demande.postdemande);
+router.post('/demande/:id_research_team', verifytoken , demande.postdemande);
 
 router.put('/demande/:id_demande' , verifytoken , demande.updatedemande);
 

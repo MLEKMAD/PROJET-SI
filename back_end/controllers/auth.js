@@ -7,9 +7,7 @@ const RESEARCH_TEAM = 1;
 exports.login = async (req, res, next) => {
     let connexion = await oracledb.getConnection(dbconfig);
     req.check('type', ' is not selected');
-    req.check('password_hashed', 'password not valid').isLength({
-        min: 6
-    });
+    req.check('password_hashed', 'password not valid').notEmpty();
     req.check('email_user', 'email not valid').isEmail();
     if (req.validationErrors()) {
         await connexion.close();
@@ -20,7 +18,7 @@ exports.login = async (req, res, next) => {
     if (req.body.type == RESEARCH_TEAM) //research team
     {
         let userexiste = await connexion.execute(
-            "SELECT password_hashed_research_team , email_research_team FROM research_team WHERE email_research_team=:email_research_team",
+            "SELECT id_research_team,password_hashed_research_team , email_research_team FROM research_team WHERE email_research_team=:email_research_team",
             [req.body.email_user]);
         // console.log('user existe in auth.js value of promise research team userexist \n ', userexiste);
         await connexion.close();
@@ -30,7 +28,10 @@ exports.login = async (req, res, next) => {
                 user: 'None'
             })
         }
+
+        console.log('body password : ',req.body.password_hashed , '\n hashed from db :',userexiste.rows[0].PASSWORD_HASHED_RESEARCH_TEAM)
         const ValidPassword = await bcrypt.compare(req.body.password_hashed, userexiste.rows[0].PASSWORD_HASHED_RESEARCH_TEAM);
+        console.log(ValidPassword);
         if (!ValidPassword) {
             return res.status(400).json({
                 message: 'password not valid form login',
@@ -38,14 +39,14 @@ exports.login = async (req, res, next) => {
             });
         }
         //i have to console log the user to see the composante of it
-        const token = jwt.sign({
-            id_research_team: userexiste.rows[0].id_research_team
+        const token = jwt.sign({id_research_team: userexiste.rows[0].ID_RESEARCH_TEAM
         }, process.env.TOKEN_SECRET,{
             expiresIn: '1h'
         });
-        return res.header('auth_token', token).json({
+        console.log(token);
+        return res.header('auth_token',token).json({
             message: 'logged succesfully ',
-            users:userexiste.rows[0]
+            users:userexiste.rows[0].ID_RESEARCH_TEAM
         });
 
 

@@ -5,12 +5,10 @@ const jwt=require('jsonwebtoken');
 
 
 exports.getstartup=async (req,res,next)=>{//verifie token
-    const token =req.header('auth_token');
-    const id_user = jwt.verify(token,process.env.TOKEN_SECRET);
     let connexion=await oracledb.getConnection(dbconfig);
     let demandes=await connexion.execute(
         "SELECT id_demande FROM research_team WHERE id_research_team=:id_research_team",
-        [id_user]);
+        [req.params.id_research_team]);
     let startups=await connexion.execute(
         "SELECT * FROM startups WHERE id_demande=:id_demande",
         [demandes.rows[0].ID_DEMANDE]);
@@ -31,19 +29,15 @@ exports.poststartup=async (req,res,next)=>{
         });
     }
     else{
-        const token =req.header('auth_token');
-        const id_user = jwt.verify(token,process.env.TOKEN_SECRET)
         let connexion=await oracledb.getConnection(dbconfig);
-        //see the outpout of verify 
-        let id_idea=await connexion.execute(
-            "SELECT id_startup FROM startups WHERE id_user=:id_user",
-            [id_user]);
         let startups=await connexion.execute(
-            "INSERT INTO startups (id_startup,name_startup,business_plan,id_demande,id_research_team) VALUES (id_startup.nextval,:name_startup,:business_plan,:type_idea,:id_demande,:id_research_team)",
+            `INSERT INTO startups
+            (id_startup,name_startup,business_plan,id_demande,id_research_team) 
+            VALUES (id_startup.nextval,:name_startup,:business_plan,:id_demande,:id_research_team)` ,
             [   req.body.name_startup ,
                 req.body.business_plan ,
                 req.params.id_demande , 
-                req.params.id_user
+                req.params.id_research_team
             ]);
         const commit = await connexion.execute('commit');   
         await connexion.close();

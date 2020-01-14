@@ -3,7 +3,7 @@ const router=express.Router();
 const user=require('../../controllers/user');
 const verifytoken=require('../../middleware/verifytoken');
 
-router.get("/authentication",user.getuser);
+router.get("/authentication",verifytoken,user.getuser);
 router.post("/authentication",user.postuser);
 router.get("/alluser",user.getalluser);
 

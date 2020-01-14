@@ -2,7 +2,12 @@
 GET http://localhost:8060/alluser
 ### verify work well
 GET http://localhost:8060/authentication
-# auth_token: get the token after the login 
+auth_token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9yZXNlYXJjaF90ZWFtIjo3LCJpYXQiOjE1NzkwMDkzMzgsImV4cCI6MTU3OTAxMjkzOH0.kNLdNlfXOV5qGr6J7XOyLRxfrcGX9vvcMdzORkTpSqM
+Content-Type: application/json
+
+{
+    "id_research_team":7
+}
 ### work welll
 POST http://localhost:8060/authentication
 Content-Type: application/json 
@@ -12,8 +17,8 @@ Content-Type: application/json
     "research_team":"1",
     "name_team":"ensiasteam",
     "full_name_research_team" : "hatim",
-    "password_hashed_research_team" : "jay",
-    "email_research_team" : "hathat@hotmail.fr",
+    "password_hashed_research_team" : "00000",
+    "email_research_team" : "test@hotmail.fr",
     "phone_number_research_team" : "09458453"
 }
 ### work well
@@ -24,11 +29,12 @@ Content-Type: application/json
     "research_team" : "3",
     "full_name_agent" : "GU",
     "password_hashed_agent" : "jdsh",
-    "email_agent" : "hafthdfat@hotmail.fr",
+    "email_agent" : "GU@hotmail.fr",
     "phone_number_agent" : "09458453"
 }
 ### work well
-PUT http://localhost:8060/authentication/6
+PUT http://localhost:8060/authentication/7
+auth_token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9yZXNlYXJjaF90ZWFtIjo3LCJpYXQiOjE1NzkwMDkzMzgsImV4cCI6MTU3OTAxMjkzOH0.kNLdNlfXOV5qGr6J7XOyLRxfrcGX9vvcMdzORkTpSqM
 Content-Type: application/json 
 
 {
@@ -39,22 +45,23 @@ Content-Type: application/json
 
 
 ###demande route
-GET http://localhost:8060/demande
+GET http://localhost:8060/demande/7
+auth_token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9yZXNlYXJjaF90ZWFtIjo3LCJpYXQiOjE1NzkwMDkzMzgsImV4cCI6MTU3OTAxMjkzOH0.kNLdNlfXOV5qGr6J7XOyLRxfrcGX9vvcMdzORkTpSqM
+
 # auth_token: get the token after the login 
 
-### need auth 
-POST  http://localhost:8060/demande
-# auth_token: get the token after the login 
-
+### insert demande work well 
+POST  http://localhost:8060/demande/7
+auth_token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9yZXNlYXJjaF90ZWFtIjo3LCJpYXQiOjE1NzkwMTU0MDgsImV4cCI6MTU3OTAxOTAwOH0.rXcBArgFJzFwcPhN3kwY65LfzrvFPJZyYOc8UtzPOxg
 Content-Type: application/json
 
-
 {
-    "name_demande":"first",
-    "description":"this is the first demande",
+    "name_demande":"second",
+    "description":"this is the second demande"
 }
 ### work well 
 PUT  http://localhost:8060/demande/2
+auth_token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9yZXNlYXJjaF90ZWFtIjo3LCJpYXQiOjE1NzkwMDkzMzgsImV4cCI6MTU3OTAxMjkzOH0.kNLdNlfXOV5qGr6J7XOyLRxfrcGX9vvcMdzORkTpSqM
 Content-Type: application/json
 
 {
@@ -64,12 +71,17 @@ Content-Type: application/json
 }
 ### work well
 DELETE http://localhost:8060/demande/2
-### add auth token
+### work well
 GET http://localhost:8060/alldemande
+auth_token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9yZXNlYXJjaF90ZWFtIjo3LCJpYXQiOjE1NzkwMDkzMzgsImV4cCI6MTU3OTAxMjkzOH0.kNLdNlfXOV5qGr6J7XOyLRxfrcGX9vvcMdzORkTpSqM
+
 ###competences pool route
 GET http://localhost:8060/competencepool
+auth_token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9yZXNlYXJjaF90ZWFtIjo3LCJpYXQiOjE1NzkwMDkzMzgsImV4cCI6MTU3OTAxMjkzOH0.kNLdNlfXOV5qGr6J7XOyLRxfrcGX9vvcMdzORkTpSqM
+
 ###
 POST http://localhost:8060/competencepool
+auth_token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9yZXNlYXJjaF90ZWFtIjo3LCJpYXQiOjE1NzkwMDkzMzgsImV4cCI6MTU3OTAxMjkzOH0.kNLdNlfXOV5qGr6J7XOyLRxfrcGX9vvcMdzORkTpSqM
 Content-Type: application/json
 
 {
@@ -82,15 +94,17 @@ POST http://localhost:8060/login
 Content-Type: application/json
 
 {
-    "email_user":"hathat@hotmail.fr",
-    "password_hashed":"hatidsm",
-    "type":"2"
+    "email_user":"test@hotmail.fr",
+    "password_hashed":"PasswordChanged",
+    "type":"1"
 }
 ### add auth_token
-GET http://localhost:8060/startup
-auth_token :
+GET http://localhost:8060/startup/7
+auth_token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9yZXNlYXJjaF90ZWFtIjo3LCJpYXQiOjE1NzkwMTQxMzgsImV4cCI6MTU3OTAxNzczOH0.FLGnnmHh3IU_SWYNCiNR8XV2ZCwSmYKexUCalHZ9WBg
 
-POST http://localhost:8060/startup/2/29
+### work well
+POST http://localhost:8060/startup/7/9
+auth_token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF9yZXNlYXJjaF90ZWFtIjo3LCJpYXQiOjE1NzkwMTUwMTIsImV4cCI6MTU3OTAxODYxMn0.3aiJAgN2JBrRj-k80xAYuGjfHeDcMumEqYKg6cxU-wE
 Content-Type: application/json
 
 {

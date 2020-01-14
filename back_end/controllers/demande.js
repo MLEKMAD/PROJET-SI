@@ -15,12 +15,12 @@ exports.alldemande=async (req,res,next)=>{
 };
 
 exports.getdemande=async (req,res,next)=>{//verifie token
-    const token =req.header('auth_token');
-    const id_user = jwt.verify(token,process.env.TOKEN_SECRET);
     let connexion=await oracledb.getConnection(dbconfig);
     let demandes=await connexion.execute(
-        "SELECT * FROM demandes WHERE id_research_team=:id_research_team",
-        [id_user]);
+        `SELECT * FROM demandes JOIN research_team 
+        ON research_team.id_demande=demandes.id_demande 
+        and  research_team.id_research_team = : id_research_team  ` ,
+        [req.params.id_research_team]);
     await connexion.close();
     return res.json({
         message:'get all idea',
@@ -30,9 +30,7 @@ exports.getdemande=async (req,res,next)=>{//verifie token
 
 exports.postdemande=async (req,res,next)=>{
     req.check('name_demande','idea name umpty').notEmpty();
-    req.check('description','description umpty').isLength({ min: 20 });
-    req.check('type_idea','email not valid').isEmail();
-    req.check('state','state null').notEmpty();
+    req.check('description','description umpty').isLength({ min: 10 });
     // try nd catch error 
     var errors=req.validationErrors();
     if(errors){
@@ -43,16 +41,12 @@ exports.postdemande=async (req,res,next)=>{
     else{
         const type_idea='init';
         const state=0;
-        const id_competence_pool=0;
+        const id_competence_pool=23;
 
-        const token =req.header('auth_token');
-        const id_user = jwt.verify(token,process.env.TOKEN_SECRET)
         let connexion=await oracledb.getConnection(dbconfig);
         //see the outpout of verify 
-        let id_idea=await connexion.execute(
-            "SELECT id_demande FROM demandes WHERE id_user=:id_user",
-            [id_user]);
-        let demandes=await connexion.execute(
+  
+        let demandesset=await connexion.execute(
             "INSERT INTO demandes (id_demande,name_demande,description,type_idea,state,id_competence_pool) VALUES (id_demande.nextval,:name_demande,:description,:type_idea,:state,:id_competences_pool)",
             [   req.body.name_demande ,
                 req.body.description ,
@@ -60,17 +54,26 @@ exports.postdemande=async (req,res,next)=>{
                 state,
                 id_competence_pool
             ]);
+        console.log('insert table')
         const commit = await connexion.execute('commit');   
-        
+
+        let demandes = await connexion.execute(
+        `select ID_DEMANDE from demandes 
+        where name_demande=:name_demande and description=:description `,
+        [   req.body.name_demande ,
+            req.body.description ]
+        );
+
         let users = await connexion.execute(
             "UPDATE research_team set  id_demande =: id_demande  WHERE  id_research_team =: id_research_team",
             [   demandes.rows[0].ID_DEMANDE,
-                id_user
-            ]);     
-        const commit = await connexion.execute('commit');
+                req.params.id_research_team
+            ]); 
+
+        const commmit = await connexion.execute('commit');
         
         await connexion.close();
-        if(demandes!== undefined){
+        if(demandes !== undefined){
             return res.json({
                 message:'POST idea',
                 done:'done succesfully'
@@ -122,6 +125,6 @@ const getpool = async (name_competence_pool) => {
     let pool = await connexion.execute(
         "SELECT id_competences_pool FROM competences_pool WHERE name_competences_pool=:name_competences_pool",
         [name_competence_pool]);
-        console.log('kaejffaef :',pool.rows)
+    console.log('kaejffaef :',pool.rows)
     return pool.rows[0];
 }
