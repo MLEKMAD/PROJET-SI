@@ -21,7 +21,7 @@
     "express-validator": "^5.3.1",
     "instantclient": "^1.0.2",
     "jsonwebtoken": "^8.5.1",
-    "nodemailer": "^6.4.1",
+    "nodemailer": "^6.4.16",
     "oracledb": "^4.1.0",
     "validate-phone-number-node-js": "0.0.1"
   },
